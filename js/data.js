@@ -74,6 +74,12 @@ function getCollection(userId) {
 function saveCollection(userId, parts) {
   DB.set(`collection_${userId}`, parts);
 }
+function getSavedCards() {
+  return DB.get('savedCards', []);
+}
+function saveSavedCards(list) {
+  DB.set('savedCards', list);
+}
 function getTournaments() {
   return DB.get('tournaments', []);
 }
@@ -82,6 +88,36 @@ function saveTournaments(list) {
 }
 function getAllMembers() {
   return USERS;
+}
+
+// Migrates old tournament-card records (v1 format with playerName) to savedCards
+function migrateLegacyData() {
+  const old = DB.get('tournaments', []);
+  if (old.length === 0 || !old[0].playerName) return;
+  const existing = getSavedCards();
+  const existingIds = new Set(existing.map(c => c.id));
+  const migrated = old
+    .filter(t => !existingIds.has(t.id))
+    .map(t => ({
+      id: t.id || ('card_' + Date.now() + Math.random()),
+      playerName: t.playerName || '',
+      team: t.team || '',
+      showTeam: !!t.team,
+      rank: t.rank || 1,
+      specialRank: null,
+      deck: (t.deck || []).map(d => typeof d === 'string' ? { name: d } : d),
+      tournamentName: t.tournamentName || '',
+      bottomText: t.bottomText || 'COBALT DRAGONA',
+      photo: t.photo || null,
+      logoLeft: t.logoLeft || null,
+      logoRight: t.logoRight || null,
+      date: t.date || '',
+      createdBy: null
+    }));
+  if (migrated.length > 0) {
+    saveSavedCards([...existing, ...migrated]);
+    DB.set('tournaments', []);
+  }
 }
 
 function getTypeIcon(type) {

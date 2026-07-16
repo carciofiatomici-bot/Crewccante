@@ -753,6 +753,305 @@ input, select, textarea { font-family: inherit; }
 }
 
 /* ============================================
+   SUBTABS (Carte Torneo)
+   ============================================ */
+.subtab-bar {
+  display: flex;
+  gap: 0.3rem;
+  background: rgba(0,0,0,0.3);
+  border-radius: 10px;
+  padding: 0.3rem;
+  margin-bottom: 1.5rem;
+  width: fit-content;
+}
+
+.subtab-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.55rem 1.1rem;
+  border-radius: 7px;
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 700;
+  font-size: 0.88rem;
+  letter-spacing: 0.04em;
+  color: var(--text-secondary);
+  transition: all 0.15s;
+}
+.subtab-btn svg { width: 16px; height: 16px; flex-shrink: 0; }
+.subtab-btn:hover { background: rgba(255,255,255,0.05); color: var(--text-primary); }
+.subtab-btn.active {
+  background: var(--bg-card);
+  color: var(--accent-blue);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.subtab-content { display: none; }
+.subtab-content.active { display: block; }
+
+.section-count {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  font-weight: 600;
+  padding: 0.4rem 0;
+}
+
+/* ── Saved Cards Grid ── */
+.saved-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 1rem;
+}
+
+.saved-card-thumb {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color 0.15s, transform 0.15s;
+  position: relative;
+}
+.saved-card-thumb:hover { border-color: rgba(59,130,246,0.4); transform: translateY(-2px); }
+
+.saved-card-thumb-photo {
+  width: 100%;
+  height: 140px;
+  overflow: hidden;
+  background: rgba(255,255,255,0.03);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  color: rgba(255,255,255,0.1);
+}
+.saved-card-thumb-photo img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+
+.saved-card-thumb-info {
+  padding: 0.6rem 0.65rem;
+}
+.saved-card-thumb-name {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--text-primary);
+}
+.saved-card-thumb-rank {
+  font-size: 0.72rem;
+  color: var(--accent-gold);
+  font-weight: 700;
+  margin-top: 0.15rem;
+}
+.saved-card-thumb-meta {
+  font-size: 0.65rem;
+  color: var(--text-secondary);
+  margin-top: 0.1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.saved-card-thumb-delete {
+  position: absolute;
+  top: 0.3rem; right: 0.3rem;
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: rgba(239,68,68,0.15);
+  color: rgba(239,68,68,0.5);
+  font-size: 0.7rem;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0;
+  transition: opacity 0.15s, background 0.15s;
+}
+.saved-card-thumb:hover .saved-card-thumb-delete { opacity: 1; }
+.saved-card-thumb-delete:hover { background: rgba(239,68,68,0.35); color: #ef4444; }
+
+/* ── Tournament Management List ── */
+.tournament-entry {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  margin-bottom: 0.85rem;
+  overflow: hidden;
+}
+
+.tournament-entry-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.tournament-entry-header:hover { background: rgba(255,255,255,0.03); }
+
+.tournament-entry-left { display: flex; flex-direction: column; gap: 0.2rem; }
+.tournament-entry-name { font-weight: 700; font-size: 1rem; }
+.tournament-entry-meta { font-size: 0.8rem; color: var(--text-secondary); }
+
+.tournament-entry-right { display: flex; align-items: center; gap: 0.75rem; }
+.tournament-card-count {
+  font-size: 0.78rem;
+  color: var(--accent-blue);
+  font-weight: 700;
+  background: rgba(59,130,246,0.1);
+  border: 1px solid rgba(59,130,246,0.2);
+  padding: 0.2rem 0.6rem;
+  border-radius: 5px;
+}
+
+.tournament-entry-actions { display: flex; gap: 0.4rem; }
+.btn-icon {
+  width: 30px; height: 30px;
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(255,255,255,0.05);
+  color: var(--text-secondary);
+  transition: all 0.15s;
+  flex-shrink: 0;
+}
+.btn-icon svg { width: 15px; height: 15px; }
+.btn-icon:hover { background: rgba(255,255,255,0.12); color: var(--text-primary); }
+.btn-icon.danger:hover { background: rgba(239,68,68,0.2); color: #ef4444; }
+
+.tournament-entry-cards {
+  display: none;
+  padding: 0.75rem 1.25rem 1rem;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  overflow: hidden;
+}
+.tournament-entry-cards.open { display: flex; }
+.tournament-entry-cards.closed { display: none; }
+
+.tournament-mini-card {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  padding: 0.4rem 0.7rem 0.4rem 0.4rem;
+}
+.tournament-mini-card-photo {
+  width: 36px; height: 36px;
+  border-radius: 5px;
+  overflow: hidden;
+  background: rgba(255,255,255,0.04);
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem;
+}
+.tournament-mini-card-photo img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+.tournament-mini-card-info { display: flex; flex-direction: column; gap: 0.05rem; }
+.tournament-mini-card-name { font-size: 0.8rem; font-weight: 700; }
+.tournament-mini-card-rank { font-size: 0.72rem; color: var(--accent-gold); font-weight: 700; }
+
+/* ── Modal cards selection ── */
+.modal-cards-selection {
+  max-height: 260px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.modal-card-option {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 0.85rem;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.modal-card-option:hover { background: rgba(59,130,246,0.06); border-color: rgba(59,130,246,0.25); }
+.modal-card-option.selected { background: rgba(59,130,246,0.12); border-color: rgba(59,130,246,0.4); }
+
+.modal-card-option input[type=checkbox] { width: 16px; height: 16px; accent-color: var(--accent-blue); flex-shrink: 0; }
+.modal-card-option-photo {
+  width: 40px; height: 40px;
+  border-radius: 6px;
+  overflow: hidden;
+  background: rgba(255,255,255,0.04);
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem;
+}
+.modal-card-option-photo img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+.modal-card-option-info { flex: 1; display: flex; flex-direction: column; gap: 0.1rem; min-width: 0; }
+.modal-card-option-name { font-weight: 700; font-size: 0.9rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.modal-card-option-meta { font-size: 0.75rem; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.modal-card-option-rank { font-size: 0.8rem; font-weight: 700; color: var(--accent-gold); flex-shrink: 0; }
+
+/* ── Members List ── */
+.members-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.member-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.65rem;
+  transition: border-color 0.15s, transform 0.15s;
+}
+.member-card:hover { border-color: rgba(139,92,246,0.35); transform: translateY(-2px); }
+
+.member-avatar-large {
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 900;
+  color: white;
+  flex-shrink: 0;
+}
+.member-avatar-large.admin { background: linear-gradient(135deg, var(--accent-gold), #d97706); }
+
+.member-display-name {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-align: center;
+}
+.member-username {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+.member-role-badge {
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 0.2rem 0.55rem;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.member-role-badge.admin { background: rgba(245,158,11,0.15); color: var(--accent-gold); border: 1px solid rgba(245,158,11,0.25); }
+.member-role-badge.member { background: rgba(100,116,139,0.15); color: var(--text-secondary); border: 1px solid var(--border); }
+
+.member-parts-count {
+  font-size: 0.78rem;
+  color: var(--accent-blue);
+  font-weight: 700;
+}
+
+/* ============================================
    TOURNAMENT CARD TEMPLATE
    ============================================ */
 .card-template {
@@ -797,6 +1096,32 @@ input, select, textarea { font-family: inherit; }
   color: var(--accent-gold);
   text-shadow: 0 0 18px rgba(245,158,11,0.6);
   line-height: 1;
+}
+
+.card-rank.swiss {
+  font-size: 0.62rem;
+  font-weight: 900;
+  color: #34d399;
+  text-shadow: 0 0 12px rgba(52,211,153,0.7);
+  line-height: 1.25;
+  text-align: center;
+  background: rgba(16,185,129,0.12);
+  border: 1px solid rgba(52,211,153,0.3);
+  border-radius: 5px;
+  padding: 0.2rem 0.35rem;
+}
+
+.card-rank.last-hero {
+  font-size: 0.55rem;
+  font-weight: 900;
+  color: #f87171;
+  text-shadow: 0 0 12px rgba(248,113,113,0.7);
+  line-height: 1.25;
+  text-align: center;
+  background: rgba(239,68,68,0.12);
+  border: 1px solid rgba(248,113,113,0.3);
+  border-radius: 5px;
+  padding: 0.2rem 0.35rem;
 }
 
 .card-team-badge {
@@ -1070,6 +1395,19 @@ input, select, textarea { font-family: inherit; }
   display: flex;
   flex-direction: column;
   gap: 0.35rem;
+}
+
+.deck-slot-stock-img {
+  width: 100%;
+  aspect-ratio: 1;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+  background: rgba(255,255,255,0.02);
 }
 
 .deck-slot-photo-upload {
