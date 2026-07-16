@@ -80,6 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Card form fields → live preview
   document.getElementById('btn-generate-card').addEventListener('click', updateCardPreview);
   document.getElementById('btn-save-card').addEventListener('click', saveCard);
+  document.getElementById('btn-new-card').addEventListener('click', resetCard);
   document.getElementById('btn-download-card').addEventListener('click', downloadCard);
   document.getElementById('btn-instagram').addEventListener('click', downloadForInstagram);
   document.getElementById('btn-remove-bg').addEventListener('click', handleBgRemoval);
@@ -673,6 +674,62 @@ function saveCard() {
   // Switch to saved-cards subtab
   switchSubtab('saved-cards');
   alert(`Carta di ${playerName} salvata!`);
+}
+
+// ── RESET CARD FORM ──────────────────────────
+function resetCard() {
+  // Text fields
+  document.getElementById('t-player-name').value    = '';
+  document.getElementById('t-team-name').value      = '';
+  document.getElementById('t-rank').value           = '';
+  document.getElementById('t-tournament-name').value = '';
+  document.getElementById('t-bottom-text').value    = 'COBALT DRAGONA';
+
+  // Toggles
+  const toggleTeam  = document.getElementById('toggle-team');
+  const toggleSwiss = document.getElementById('toggle-swiss');
+  const toggleLast  = document.getElementById('toggle-last');
+  toggleTeam.checked  = true;
+  toggleSwiss.checked = false;
+  toggleLast.checked  = false;
+  document.getElementById('toggle-team-label').textContent = 'Sì';
+  document.getElementById('team-name-field').style.display = '';
+  document.getElementById('t-rank').disabled    = false;
+  document.getElementById('t-rank').style.opacity = '';
+
+  // Photo
+  const photo    = document.getElementById('photo-preview');
+  const photoPh  = document.getElementById('photo-placeholder');
+  const bgArea   = document.getElementById('bg-removal-area');
+  photo.src      = '';
+  photo.classList.add('hidden');
+  photoPh.classList.remove('hidden');
+  if (bgArea) bgArea.classList.add('hidden');
+  const statusEl = document.getElementById('bg-status');
+  if (statusEl) { statusEl.textContent = ''; statusEl.className = 'bg-status hidden'; }
+
+  // Deck slots
+  [1, 2, 3].forEach(i => {
+    document.getElementById(`deck-${i}`).value = '';
+    const varSel = document.getElementById(`deck-variant-${i}`);
+    if (varSel) varSel.value = '';
+    const prev = document.getElementById(`deck-preview-${i}`);
+    const ph   = document.getElementById(`deck-ph-${i}`);
+    if (prev) { prev.src = ''; prev.style.display = 'none'; }
+    if (ph)   ph.style.display = '';
+  });
+
+  // Logos — restore defaults, clear any uploaded data URL
+  ['left', 'right'].forEach(side => {
+    const fp    = document.getElementById(`logo-preview-${side}`);
+    const input = document.getElementById(`logo-file-${side}`);
+    const drop  = document.getElementById(`logo-drop-${side}`);
+    if (fp)    { fp.src = ''; fp.classList.add('hidden'); }
+    if (input) input.value = '';
+    if (drop)  drop.querySelectorAll('.logo-mini-ph').forEach(el => el.style.display = '');
+  });
+
+  updateCardPreview();
 }
 
 function getLogoSrc(side) {

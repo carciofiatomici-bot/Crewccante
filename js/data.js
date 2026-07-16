@@ -1,74 +1,313 @@
-// Known Beyblade X parts database (skeleton — expand as needed)
+// Known Beyblade X parts database
 const KNOWN_PARTS = [
-  // ── BLADES ──────────────────────────────────────────
-  { id: 'b001', name: 'Dran Sword',      type: 'blade',   series: 'Beyblade X' },
-  { id: 'b002', name: 'Hells Scythe',    type: 'blade',   series: 'Beyblade X' },
-  { id: 'b003', name: 'Knight Shield',   type: 'blade',   series: 'Beyblade X' },
-  { id: 'b004', name: 'Cobalt Drake',    type: 'blade',   series: 'Beyblade X' },
-  { id: 'b005', name: 'Wizard Arrow',    type: 'blade',   series: 'Beyblade X' },
-  { id: 'b006', name: 'Leon Claw',       type: 'blade',   series: 'Beyblade X' },
-  { id: 'b007', name: 'Shark Edge',      type: 'blade',   series: 'Beyblade X' },
-  { id: 'b008', name: 'Viper Tail',      type: 'blade',   series: 'Beyblade X' },
-  { id: 'b009', name: 'Rhino Horn',      type: 'blade',   series: 'Beyblade X' },
-  { id: 'b010', name: 'Phoenix Wing',    type: 'blade',   series: 'Beyblade X' },
-  { id: 'b011', name: 'Dran Dagger',     type: 'blade',   series: 'Beyblade X' },
-  { id: 'b012', name: 'Fox Claw',        type: 'blade',   series: 'Beyblade X' },
-  { id: 'b013', name: 'Dolphin Spiral',  type: 'blade',   series: 'Beyblade X' },
-  { id: 'b014', name: 'Hells Chain',     type: 'blade',   series: 'Beyblade X' },
-  { id: 'b015', name: 'Unicorn Sting',   type: 'blade',   series: 'Beyblade X' },
-  // ── RATCHET ─────────────────────────────────────────
-  { id: 'r001', name: '3-60',            type: 'ratchet', series: 'Beyblade X' },
-  { id: 'r002', name: '4-60',            type: 'ratchet', series: 'Beyblade X' },
-  { id: 'r003', name: '5-60',            type: 'ratchet', series: 'Beyblade X' },
-  { id: 'r004', name: '3-70',            type: 'ratchet', series: 'Beyblade X' },
-  { id: 'r005', name: '4-70',            type: 'ratchet', series: 'Beyblade X' },
-  { id: 'r006', name: '5-70',            type: 'ratchet', series: 'Beyblade X' },
-  { id: 'r007', name: '3-80',            type: 'ratchet', series: 'Beyblade X' },
-  { id: 'r008', name: '4-80',            type: 'ratchet', series: 'Beyblade X' },
-  { id: 'r009', name: '5-80',            type: 'ratchet', series: 'Beyblade X' },
-  { id: 'r010', name: '9-60',            type: 'ratchet', series: 'Beyblade X' },
-  { id: 'r011', name: '9-70',            type: 'ratchet', series: 'Beyblade X' },
-  { id: 'r012', name: '9-80',            type: 'ratchet', series: 'Beyblade X' },
-  // ── BIT ─────────────────────────────────────────────
-  { id: 't001', name: 'Flat',            type: 'bit',     series: 'Beyblade X' },
-  { id: 't002', name: 'Ball',            type: 'bit',     series: 'Beyblade X' },
-  { id: 't003', name: 'Spike',           type: 'bit',     series: 'Beyblade X' },
-  { id: 't004', name: 'Point',           type: 'bit',     series: 'Beyblade X' },
-  { id: 't005', name: 'Needle',          type: 'bit',     series: 'Beyblade X' },
-  { id: 't006', name: 'Rush',            type: 'bit',     series: 'Beyblade X' },
-  { id: 't007', name: 'Taper',           type: 'bit',     series: 'Beyblade X' },
-  { id: 't008', name: 'Orb',             type: 'bit',     series: 'Beyblade X' },
-  { id: 't009', name: 'Flat-F',          type: 'bit',     series: 'Beyblade X' },
-  { id: 't010', name: 'Gear Flat',       type: 'bit',     series: 'Beyblade X' },
-  { id: 't011', name: 'Low Flat',        type: 'bit',     series: 'Beyblade X' },
-  { id: 't012', name: 'Kick',            type: 'bit',     series: 'Beyblade X' },
+  // ── BX BLADES ────────────────────────────────────────────
+  { id: 'b001', name: 'Dran Sword',                    type: 'blade', series: 'BX' },
+  { id: 'b002', name: 'Hells Scythe',                  type: 'blade', series: 'BX' },
+  { id: 'b003', name: 'Knight Shield',                 type: 'blade', series: 'BX' },
+  { id: 'b004', name: 'Cobalt Drake',                  type: 'blade', series: 'BX' },
+  { id: 'b005', name: 'Wizard Arrow',                  type: 'blade', series: 'BX' },
+  { id: 'b006', name: 'Leon Claw',                     type: 'blade', series: 'BX' },
+  { id: 'b007', name: 'Shark Edge',                    type: 'blade', series: 'BX' },
+  { id: 'b008', name: 'Viper Tail',                    type: 'blade', series: 'BX' },
+  { id: 'b009', name: 'Rhino Horn',                    type: 'blade', series: 'BX' },
+  { id: 'b010', name: 'Phoenix Wing',                  type: 'blade', series: 'BX' },
+  { id: 'b011', name: 'Dran Dagger',                   type: 'blade', series: 'BX' },
+  { id: 'b012', name: 'Fox Claw',                      type: 'blade', series: 'BX' },
+  { id: 'b013', name: 'Dolphin Spiral',                type: 'blade', series: 'BX' },
+  { id: 'b014', name: 'Hells Chain',                   type: 'blade', series: 'BX' },
+  { id: 'b015', name: 'Unicorn Sting',                 type: 'blade', series: 'BX' },
+  { id: 'b016', name: 'Knight Lance',                  type: 'blade', series: 'BX' },
+  { id: 'b017', name: 'Phoenix Feather',               type: 'blade', series: 'BX' },
+  { id: 'b018', name: 'Samurai Calibur',               type: 'blade', series: 'BX' },
+  { id: 'b019', name: 'Shelter Drake',                 type: 'blade', series: 'BX' },
+  { id: 'b020', name: 'Sphinx Cowl',                   type: 'blade', series: 'BX' },
+  { id: 'b021', name: 'Tricera Press',                 type: 'blade', series: 'BX' },
+  { id: 'b022', name: 'Tyranno Beat',                  type: 'blade', series: 'BX' },
+  { id: 'b023', name: 'Weiss Tiger',                   type: 'blade', series: 'BX' },
+  { id: 'b024', name: 'Whale Wave',                    type: 'blade', series: 'BX' },
+  { id: 'b025', name: 'Wyvern Gale',                   type: 'blade', series: 'BX' },
+  { id: 'b026', name: 'Croc Crunch',                   type: 'blade', series: 'BX' },
+  { id: 'b027', name: 'Shark Gill',                    type: 'blade', series: 'BX' },
+  { id: 'b028', name: 'Bat Gust',                      type: 'blade', series: 'BX' },
+  { id: 'b029', name: 'Shinobi Knife',                 type: 'blade', series: 'BX' },
+  { id: 'b030', name: 'Tricera Spiky',                 type: 'blade', series: 'BX' },
+  { id: 'b031', name: 'Tyranno Roar',                  type: 'blade', series: 'BX' },
+  { id: 'b032', name: 'Bear Scratch',                  type: 'blade', series: 'BX' },
+  { id: 'b033', name: 'Samurai Steel',                 type: 'blade', series: 'BX' },
+  { id: 'b034', name: 'Goat Tackle',                   type: 'blade', series: 'BX' },
+  { id: 'b035', name: 'Ptera Swing',                   type: 'blade', series: 'BX' },
+  { id: 'b036', name: 'Mammoth Tusk',                  type: 'blade', series: 'BX' },
+  { id: 'b037', name: 'Cyclops Eye',                   type: 'blade', series: 'BX' },
+  { id: 'b038', name: 'Dran Strike',                   type: 'blade', series: 'BX' },
+  { id: 'b039', name: 'Heavens Ring',                  type: 'blade', series: 'BX' },
+  { id: 'b040', name: 'Sieg Superion',                 type: 'blade', series: 'BX' },
+  { id: 'b041', name: 'Dragoon Storm',                 type: 'blade', series: 'BX' },
+  { id: 'b042', name: 'Dranzer Spiral',                type: 'blade', series: 'BX' },
+  { id: 'b043', name: 'Driger Slash',                  type: 'blade', series: 'BX' },
+  { id: 'b044', name: 'Draciel Shield',                type: 'blade', series: 'BX' },
+  { id: 'b045', name: 'Lightning L-Drago (Rapid-Hit)', type: 'blade', series: 'BX' },
+  { id: 'b046', name: 'Lightning L-Drago (Upper)',     type: 'blade', series: 'BX' },
+  { id: 'b047', name: 'Rock Leone',                    type: 'blade', series: 'BX' },
+  { id: 'b048', name: 'Storm Pegasis',                 type: 'blade', series: 'BX' },
+  { id: 'b049', name: 'Storm Spriggan',                type: 'blade', series: 'BX' },
+  { id: 'b050', name: 'Trypio',                        type: 'blade', series: 'BX' },
+  { id: 'b051', name: 'Victory Valkyrie',              type: 'blade', series: 'BX' },
+  { id: 'b052', name: 'Xeno Xcalibur',                 type: 'blade', series: 'BX' },
+  { id: 'b053', name: 'Mosasaurus',                    type: 'blade', series: 'BX' },
+  { id: 'b054', name: 'Quetzalcoatlus',                type: 'blade', series: 'BX' },
+  { id: 'b055', name: 'Spinosaurus',                   type: 'blade', series: 'BX' },
+  { id: 'b056', name: 'T. Rex',                        type: 'blade', series: 'BX' },
+  { id: 'b057', name: 'Captain America',               type: 'blade', series: 'BX' },
+  { id: 'b058', name: 'Green Goblin',                  type: 'blade', series: 'BX' },
+  { id: 'b059', name: 'Iron Man',                      type: 'blade', series: 'BX' },
+  { id: 'b060', name: 'Miles Morales',                 type: 'blade', series: 'BX' },
+  { id: 'b061', name: 'Red Hulk',                      type: 'blade', series: 'BX' },
+  { id: 'b062', name: 'Spider-Man',                    type: 'blade', series: 'BX' },
+  { id: 'b063', name: 'Thanos',                        type: 'blade', series: 'BX' },
+  { id: 'b064', name: 'Venom',                         type: 'blade', series: 'BX' },
+  { id: 'b065', name: 'Chewbacca',                     type: 'blade', series: 'BX' },
+  { id: 'b066', name: 'Darth Vader',                   type: 'blade', series: 'BX' },
+  { id: 'b067', name: 'General Grievous',              type: 'blade', series: 'BX' },
+  { id: 'b068', name: 'Luke Skywalker',                type: 'blade', series: 'BX' },
+  { id: 'b069', name: 'Moff Gideon',                   type: 'blade', series: 'BX' },
+  { id: 'b070', name: 'Obi-Wan Kenobi',                type: 'blade', series: 'BX' },
+  { id: 'b071', name: 'Stormtrooper',                  type: 'blade', series: 'BX' },
+  { id: 'b072', name: 'The Mandalorian',               type: 'blade', series: 'BX' },
+  { id: 'b073', name: 'Bumblebee',                     type: 'blade', series: 'BX' },
+  { id: 'b074', name: 'Megatron',                      type: 'blade', series: 'BX' },
+  { id: 'b075', name: 'Optimus Primal',                type: 'blade', series: 'BX' },
+  { id: 'b076', name: 'Optimus Prime',                 type: 'blade', series: 'BX' },
+  { id: 'b077', name: 'Shockwave',                     type: 'blade', series: 'BX' },
+  { id: 'b078', name: 'Starscream',                    type: 'blade', series: 'BX' },
+  // ── UX BLADES ────────────────────────────────────────────
+  { id: 'u001', name: 'Aero Pegasus',    type: 'blade', series: 'UX' },
+  { id: 'u002', name: 'Clock Mirage',    type: 'blade', series: 'UX' },
+  { id: 'u003', name: 'Dran Buster',     type: 'blade', series: 'UX' },
+  { id: 'u004', name: 'Ghost Circle',    type: 'blade', series: 'UX' },
+  { id: 'u005', name: 'Golem Rock',      type: 'blade', series: 'UX' },
+  { id: 'u006', name: 'Hells Hammer',    type: 'blade', series: 'UX' },
+  { id: 'u007', name: 'Impact Drake',    type: 'blade', series: 'UX' },
+  { id: 'u008', name: 'Knight Mail',     type: 'blade', series: 'UX' },
+  { id: 'u009', name: 'Leon Crest',      type: 'blade', series: 'UX' },
+  { id: 'u010', name: 'Meteor Dragoon',  type: 'blade', series: 'UX' },
+  { id: 'u011', name: 'Mummy Curse',     type: 'blade', series: 'UX' },
+  { id: 'u012', name: 'Orochi Cluster',  type: 'blade', series: 'UX' },
+  { id: 'u013', name: 'Phoenix Rudder',  type: 'blade', series: 'UX' },
+  { id: 'u014', name: 'Samurai Saber',   type: 'blade', series: 'UX' },
+  { id: 'u015', name: 'Scorpio Spear',   type: 'blade', series: 'UX' },
+  { id: 'u016', name: 'Shark Scale',     type: 'blade', series: 'UX' },
+  { id: 'u017', name: 'Shinobi Shadow',  type: 'blade', series: 'UX' },
+  { id: 'u018', name: 'Silver Wolf',     type: 'blade', series: 'UX' },
+  { id: 'u019', name: 'Wizard Rod',      type: 'blade', series: 'UX' },
+  { id: 'u020', name: 'Hack Viking',     type: 'blade', series: 'UX' },
+  { id: 'u021', name: 'Wyvern Hover',    type: 'blade', series: 'UX' },
+  { id: 'u022', name: 'Stun Medusa',     type: 'blade', series: 'UX' },
+  { id: 'u023', name: 'Bullet Griffon',  type: 'blade', series: 'UX' },
+  { id: 'u024', name: 'Cutter Shinobi',  type: 'blade', series: 'UX' },
+  { id: 'u025', name: 'Glory Valkyrie',  type: 'blade', series: 'UX' },
+  { id: 'u026', name: 'Hells Nether',    type: 'blade', series: 'UX' },
+  { id: 'u027', name: 'Rampart Aegis',   type: 'blade', series: 'UX' },
+  { id: 'u028', name: 'Seize Jaguar',    type: 'blade', series: 'UX' },
+  { id: 'u029', name: 'Valor Bison',     type: 'blade', series: 'UX' },
+  // ── CX CHIPS ─────────────────────────────────────────────
+  { id: 'cc001', name: 'Bahamut',   type: 'cx-chip', series: 'CX' },
+  { id: 'cc002', name: 'Brachio',   type: 'cx-chip', series: 'CX' },
+  { id: 'cc003', name: 'Cerberus',  type: 'cx-chip', series: 'CX' },
+  { id: 'cc004', name: 'Croc',      type: 'cx-chip', series: 'CX' },
+  { id: 'cc005', name: 'Drake',     type: 'cx-chip', series: 'CX' },
+  { id: 'cc006', name: 'Dran',      type: 'cx-chip', series: 'CX' },
+  { id: 'cc007', name: 'Enlil',     type: 'cx-chip', series: 'CX' },
+  { id: 'cc008', name: 'Eva',       type: 'cx-chip', series: 'CX' },
+  { id: 'cc009', name: 'Fox',       type: 'cx-chip', series: 'CX' },
+  { id: 'cc010', name: 'Hells',     type: 'cx-chip', series: 'CX' },
+  { id: 'cc011', name: 'Hornet',    type: 'cx-chip', series: 'CX' },
+  { id: 'cc012', name: 'Knight',    type: 'cx-chip', series: 'CX' },
+  { id: 'cc013', name: 'Kraken',    type: 'cx-chip', series: 'CX' },
+  { id: 'cc014', name: 'Leon',      type: 'cx-chip', series: 'CX' },
+  { id: 'cc015', name: 'Emperor',   type: 'cx-chip', series: 'CX' },
+  { id: 'cc016', name: 'Pegasus',   type: 'cx-chip', series: 'CX' },
+  { id: 'cc017', name: 'Perseus',   type: 'cx-chip', series: 'CX' },
+  { id: 'cc018', name: 'Phoenix',   type: 'cx-chip', series: 'CX' },
+  { id: 'cc019', name: 'Ragna',     type: 'cx-chip', series: 'CX' },
+  { id: 'cc020', name: 'Rhino',     type: 'cx-chip', series: 'CX' },
+  { id: 'cc021', name: 'Sol',       type: 'cx-chip', series: 'CX' },
+  { id: 'cc022', name: 'Bucks',     type: 'cx-chip', series: 'CX' },
+  { id: 'cc023', name: 'Tiga',      type: 'cx-chip', series: 'CX' },
+  { id: 'cc024', name: 'Unicorn',   type: 'cx-chip', series: 'CX' },
+  { id: 'cc025', name: 'Valkyrie',  type: 'cx-chip', series: 'CX' },
+  { id: 'cc026', name: 'Whale',     type: 'cx-chip', series: 'CX' },
+  { id: 'cc027', name: 'Wolf',      type: 'cx-chip', series: 'CX' },
+  { id: 'cc028', name: 'Wizard',    type: 'cx-chip', series: 'CX' },
+  // ── CX MAIN BLADES ───────────────────────────────────────
+  { id: 'cm001', name: 'Blitz',     type: 'cx-main', series: 'CX' },
+  { id: 'cm002', name: 'Delta',     type: 'cx-main', series: 'CX' },
+  { id: 'cm003', name: 'Fortress',  type: 'cx-main', series: 'CX' },
+  { id: 'cm004', name: 'Hurricane', type: 'cx-main', series: 'CX' },
+  { id: 'cm005', name: 'Rage',      type: 'cx-main', series: 'CX' },
+  { id: 'cm006', name: 'Tread',     type: 'cx-main', series: 'CX' },
+  { id: 'cm007', name: 'Whip',      type: 'cx-main', series: 'CX' },
+  { id: 'cm008', name: 'Arc',       type: 'cx-main', series: 'CX' },
+  { id: 'cm009', name: 'Blast',     type: 'cx-main', series: 'CX' },
+  { id: 'cm010', name: 'Brave',     type: 'cx-main', series: 'CX' },
+  { id: 'cm011', name: 'Brush',     type: 'cx-main', series: 'CX' },
+  { id: 'cm012', name: 'Dark',      type: 'cx-main', series: 'CX' },
+  { id: 'cm013', name: 'Eclipse',   type: 'cx-main', series: 'CX' },
+  { id: 'cm014', name: 'Fang',      type: 'cx-main', series: 'CX' },
+  { id: 'cm015', name: 'Flame',     type: 'cx-main', series: 'CX' },
+  { id: 'cm016', name: 'Flare',     type: 'cx-main', series: 'CX' },
+  { id: 'cm017', name: 'Fort',      type: 'cx-main', series: 'CX' },
+  { id: 'cm018', name: 'Hunt',      type: 'cx-main', series: 'CX' },
+  { id: 'cm019', name: 'Might',     type: 'cx-main', series: 'CX' },
+  { id: 'cm020', name: 'Reaper',    type: 'cx-main', series: 'CX' },
+  { id: 'cm021', name: 'Volt',      type: 'cx-main', series: 'CX' },
+  { id: 'cm022', name: 'Wriggle',   type: 'cx-main', series: 'CX' },
+  // ── CX ASSIST BLADES ─────────────────────────────────────
+  { id: 'ca001', name: 'Break',    type: 'cx-assist', series: 'CX' },
+  { id: 'ca002', name: 'Flow',     type: 'cx-assist', series: 'CX' },
+  { id: 'ca003', name: 'Guard',    type: 'cx-assist', series: 'CX' },
+  { id: 'ca004', name: 'I',        type: 'cx-assist', series: 'CX' },
+  { id: 'ca005', name: 'Outer',    type: 'cx-assist', series: 'CX' },
+  { id: 'ca006', name: 'Peak',     type: 'cx-assist', series: 'CX' },
+  { id: 'ca007', name: 'T',        type: 'cx-assist', series: 'CX' },
+  { id: 'ca008', name: 'Assault',  type: 'cx-assist', series: 'CX' },
+  { id: 'ca009', name: 'Bumper',   type: 'cx-assist', series: 'CX' },
+  { id: 'ca010', name: 'Charge',   type: 'cx-assist', series: 'CX' },
+  { id: 'ca011', name: 'Dual',     type: 'cx-assist', series: 'CX' },
+  { id: 'ca012', name: 'Erase',    type: 'cx-assist', series: 'CX' },
+  { id: 'ca013', name: 'Free',     type: 'cx-assist', series: 'CX' },
+  { id: 'ca014', name: 'Gravity',  type: 'cx-assist', series: 'CX' },
+  { id: 'ca015', name: 'Heavy',    type: 'cx-assist', series: 'CX' },
+  { id: 'ca016', name: 'Jaggy',    type: 'cx-assist', series: 'CX' },
+  { id: 'ca017', name: 'Knuckle',  type: 'cx-assist', series: 'CX' },
+  { id: 'ca018', name: 'Massive',  type: 'cx-assist', series: 'CX' },
+  { id: 'ca019', name: 'Odd',      type: 'cx-assist', series: 'CX' },
+  { id: 'ca020', name: 'Q',        type: 'cx-assist', series: 'CX' },
+  { id: 'ca021', name: 'Round',    type: 'cx-assist', series: 'CX' },
+  { id: 'ca022', name: 'Slash',    type: 'cx-assist', series: 'CX' },
+  { id: 'ca023', name: 'Turn',     type: 'cx-assist', series: 'CX' },
+  { id: 'ca024', name: 'Vertical', type: 'cx-assist', series: 'CX' },
+  { id: 'ca025', name: 'Wheel',    type: 'cx-assist', series: 'CX' },
+  { id: 'ca026', name: 'Zillion',  type: 'cx-assist', series: 'CX' },
+  // ── RATCHETS ─────────────────────────────────────────────
+  { id: 'r001', name: '3-60',  type: 'ratchet', series: 'Beyblade X' },
+  { id: 'r002', name: '4-60',  type: 'ratchet', series: 'Beyblade X' },
+  { id: 'r003', name: '5-60',  type: 'ratchet', series: 'Beyblade X' },
+  { id: 'r004', name: '3-70',  type: 'ratchet', series: 'Beyblade X' },
+  { id: 'r005', name: '4-70',  type: 'ratchet', series: 'Beyblade X' },
+  { id: 'r006', name: '5-70',  type: 'ratchet', series: 'Beyblade X' },
+  { id: 'r007', name: '3-80',  type: 'ratchet', series: 'Beyblade X' },
+  { id: 'r008', name: '4-80',  type: 'ratchet', series: 'Beyblade X' },
+  { id: 'r009', name: '5-80',  type: 'ratchet', series: 'Beyblade X' },
+  { id: 'r010', name: '9-60',  type: 'ratchet', series: 'Beyblade X' },
+  { id: 'r011', name: '9-70',  type: 'ratchet', series: 'Beyblade X' },
+  { id: 'r012', name: '9-80',  type: 'ratchet', series: 'Beyblade X' },
+  { id: 'r013', name: '0-60',  type: 'ratchet', series: 'Beyblade X' },
+  { id: 'r014', name: '0-70',  type: 'ratchet', series: 'Beyblade X' },
+  { id: 'r015', name: '0-80',  type: 'ratchet', series: 'Beyblade X' },
+  { id: 'r016', name: '1-50',  type: 'ratchet', series: 'Beyblade X' },
+  { id: 'r017', name: '1-60',  type: 'ratchet', series: 'Beyblade X' },
+  { id: 'r018', name: '1-70',  type: 'ratchet', series: 'Beyblade X' },
+  { id: 'r019', name: '1-80',  type: 'ratchet', series: 'Beyblade X' },
+  { id: 'r020', name: '2-60',  type: 'ratchet', series: 'Beyblade X' },
+  { id: 'r021', name: '2-70',  type: 'ratchet', series: 'Beyblade X' },
+  { id: 'r022', name: '2-80',  type: 'ratchet', series: 'Beyblade X' },
+  { id: 'r023', name: '3-85',  type: 'ratchet', series: 'Beyblade X' },
+  { id: 'r024', name: '4-50',  type: 'ratchet', series: 'Beyblade X' },
+  { id: 'r025', name: '4-55',  type: 'ratchet', series: 'Beyblade X' },
+  { id: 'r026', name: '5-50',  type: 'ratchet', series: 'Beyblade X' },
+  { id: 'r027', name: '6-60',  type: 'ratchet', series: 'Beyblade X' },
+  { id: 'r028', name: '6-70',  type: 'ratchet', series: 'Beyblade X' },
+  { id: 'r029', name: '6-80',  type: 'ratchet', series: 'Beyblade X' },
+  { id: 'r030', name: '7-55',  type: 'ratchet', series: 'Beyblade X' },
+  { id: 'r031', name: '7-60',  type: 'ratchet', series: 'Beyblade X' },
+  { id: 'r032', name: '7-70',  type: 'ratchet', series: 'Beyblade X' },
+  { id: 'r033', name: '7-80',  type: 'ratchet', series: 'Beyblade X' },
+  { id: 'r034', name: '8-70',  type: 'ratchet', series: 'Beyblade X' },
+  { id: 'r035', name: '8-80',  type: 'ratchet', series: 'Beyblade X' },
+  { id: 'r036', name: '9-65',  type: 'ratchet', series: 'Beyblade X' },
+  { id: 'r037', name: 'M-85',  type: 'ratchet', series: 'Beyblade X' },
+  // ── BITS ─────────────────────────────────────────────────
+  { id: 't001', name: 'Flat',         type: 'bit', series: 'Beyblade X' },
+  { id: 't002', name: 'Ball',         type: 'bit', series: 'Beyblade X' },
+  { id: 't003', name: 'Spike',        type: 'bit', series: 'Beyblade X' },
+  { id: 't004', name: 'Point',        type: 'bit', series: 'Beyblade X' },
+  { id: 't005', name: 'Needle',       type: 'bit', series: 'Beyblade X' },
+  { id: 't006', name: 'Rush',         type: 'bit', series: 'Beyblade X' },
+  { id: 't007', name: 'Taper',        type: 'bit', series: 'Beyblade X' },
+  { id: 't008', name: 'Orb',          type: 'bit', series: 'Beyblade X' },
+  { id: 't009', name: 'Free Flat',    type: 'bit', series: 'Beyblade X' },
+  { id: 't010', name: 'Gear Flat',    type: 'bit', series: 'Beyblade X' },
+  { id: 't011', name: 'Low Flat',     type: 'bit', series: 'Beyblade X' },
+  { id: 't012', name: 'Kick',         type: 'bit', series: 'Beyblade X' },
+  { id: 't013', name: 'Accel',        type: 'bit', series: 'Beyblade X' },
+  { id: 't014', name: 'Bound Spike',  type: 'bit', series: 'Beyblade X' },
+  { id: 't015', name: 'Cyclone',      type: 'bit', series: 'Beyblade X' },
+  { id: 't016', name: 'Disk Ball',    type: 'bit', series: 'Beyblade X' },
+  { id: 't017', name: 'Disk Spike',   type: 'bit', series: 'Beyblade X' },
+  { id: 't018', name: 'Dot',          type: 'bit', series: 'Beyblade X' },
+  { id: 't019', name: 'Elevate',      type: 'bit', series: 'Beyblade X' },
+  { id: 't020', name: 'Free Ball',    type: 'bit', series: 'Beyblade X' },
+  { id: 't021', name: 'Gear Ball',    type: 'bit', series: 'Beyblade X' },
+  { id: 't022', name: 'Gear Needle',  type: 'bit', series: 'Beyblade X' },
+  { id: 't023', name: 'Gear Point',   type: 'bit', series: 'Beyblade X' },
+  { id: 't024', name: 'Gear Rush',    type: 'bit', series: 'Beyblade X' },
+  { id: 't025', name: 'Gear Unite',   type: 'bit', series: 'Beyblade X' },
+  { id: 't026', name: 'Glide',        type: 'bit', series: 'Beyblade X' },
+  { id: 't027', name: 'Hexa',         type: 'bit', series: 'Beyblade X' },
+  { id: 't028', name: 'High Needle',  type: 'bit', series: 'Beyblade X' },
+  { id: 't029', name: 'High Taper',   type: 'bit', series: 'Beyblade X' },
+  { id: 't030', name: 'Ignition',     type: 'bit', series: 'Beyblade X' },
+  { id: 't031', name: 'Jolt',         type: 'bit', series: 'Beyblade X' },
+  { id: 't032', name: 'Level',        type: 'bit', series: 'Beyblade X' },
+  { id: 't033', name: 'Low Orb',      type: 'bit', series: 'Beyblade X' },
+  { id: 't034', name: 'Low Point',    type: 'bit', series: 'Beyblade X' },
+  { id: 't035', name: 'Low Rush',     type: 'bit', series: 'Beyblade X' },
+  { id: 't036', name: 'Merge',        type: 'bit', series: 'Beyblade X' },
+  { id: 't037', name: 'Metal Needle', type: 'bit', series: 'Beyblade X' },
+  { id: 't038', name: 'Narrow',       type: 'bit', series: 'Beyblade X' },
+  { id: 't039', name: 'Quake',        type: 'bit', series: 'Beyblade X' },
+  { id: 't040', name: 'Rubber Accel', type: 'bit', series: 'Beyblade X' },
+  { id: 't041', name: 'Trans Kick',   type: 'bit', series: 'Beyblade X' },
+  { id: 't042', name: 'Trans Point',  type: 'bit', series: 'Beyblade X' },
+  { id: 't043', name: 'Under Flat',   type: 'bit', series: 'Beyblade X' },
+  { id: 't044', name: 'Under Needle', type: 'bit', series: 'Beyblade X' },
+  { id: 't045', name: 'Unite',        type: 'bit', series: 'Beyblade X' },
+  { id: 't046', name: 'Vortex',       type: 'bit', series: 'Beyblade X' },
+  { id: 't047', name: 'Wall Ball',    type: 'bit', series: 'Beyblade X' },
+  { id: 't048', name: 'Wall Wedge',   type: 'bit', series: 'Beyblade X' },
+  { id: 't049', name: 'Wedge',        type: 'bit', series: 'Beyblade X' },
+  { id: 't050', name: 'Yielding',     type: 'bit', series: 'Beyblade X' },
+  { id: 't051', name: 'Zap',          type: 'bit', series: 'Beyblade X' },
+  // ── RATCHET+BIT INTEGRATI ────────────────────────────────
+  { id: 'i001', name: 'Operate', type: 'integrated', series: 'Beyblade X' },
+  { id: 'i002', name: 'Turbo',   type: 'integrated', series: 'Beyblade X' },
 ];
 
 // ── VARIANTI COLORE ──────────────────────────
 const VARIANTS = [
-  { id: '',        label: 'Standard'  },
-  { id: 'black',   label: 'Black'     },
-  { id: 'white',   label: 'White'     },
-  { id: 'red',     label: 'Red'       },
-  { id: 'blue',    label: 'Blue'      },
-  { id: 'gold',    label: 'Gold'      },
-  { id: 'silver',  label: 'Silver'    },
-  { id: 'galaxy',  label: 'Galaxy'    },
-  { id: 'chrome',  label: 'Chrome'    },
-  { id: 'limited', label: 'Limited'   },
+  { id: '',        label: 'Standard' },
+  { id: 'black',   label: 'Black'    },
+  { id: 'white',   label: 'White'    },
+  { id: 'red',     label: 'Red'      },
+  { id: 'blue',    label: 'Blue'     },
+  { id: 'gold',    label: 'Gold'     },
+  { id: 'silver',  label: 'Silver'   },
+  { id: 'galaxy',  label: 'Galaxy'   },
+  { id: 'chrome',  label: 'Chrome'   },
+  { id: 'limited', label: 'Limited'  },
 ];
 
 // ── AUTH ─────────────────────────────────────────────────
 const USERS = [
-  { id: 'u1',  username: 'Croccante', password: 'croccante', displayName: 'Croccante', role: 'admin' },
-  { id: 'u2',  username: 'unam',      password: 'unam',      displayName: 'Unam',      role: 'member' },
-  { id: 'u3',  username: 'bukko',     password: 'bukko',     displayName: 'Bukko',     role: 'member' },
-  { id: 'u4',  username: 'asbein',    password: 'asbein',    displayName: 'Asbein',    role: 'member' },
-  { id: 'u5',  username: 'ermina',    password: 'ermina',    displayName: 'Ermina',    role: 'member' },
-  { id: 'u6',  username: 'daniel',    password: 'daniel',    displayName: 'Daniel',    role: 'member' },
-  { id: 'u7',  username: 'dalitrus',  password: 'dalitrus',  displayName: 'Dalitrus',  role: 'member' },
-  { id: 'u8',  username: 'nardazza',  password: 'nardazza',  displayName: 'Nardazza',  role: 'member' },
-  { id: 'u9',  username: 'beymax',    password: 'beymax',    displayName: 'Beymax',    role: 'member' },
+  { id: 'u1', username: 'Croccante', password: 'croccante', displayName: 'Croccante', role: 'admin'  },
+  { id: 'u2', username: 'unam',      password: 'unam',      displayName: 'Unam',      role: 'member' },
+  { id: 'u3', username: 'bukko',     password: 'bukko',     displayName: 'Bukko',     role: 'member' },
+  { id: 'u4', username: 'asbein',    password: 'asbein',    displayName: 'Asbein',    role: 'member' },
+  { id: 'u5', username: 'ermina',    password: 'ermina',    displayName: 'Ermina',    role: 'member' },
+  { id: 'u6', username: 'daniel',    password: 'daniel',    displayName: 'Daniel',    role: 'member' },
+  { id: 'u7', username: 'dalitrus',  password: 'dalitrus',  displayName: 'Dalitrus',  role: 'member' },
+  { id: 'u8', username: 'nardazza',  password: 'nardazza',  displayName: 'Nardazza',  role: 'member' },
+  { id: 'u9', username: 'beymax',    password: 'beymax',    displayName: 'Beymax',    role: 'member' },
 ];
 
 // ── STORAGE HELPERS ──────────────────────────────────────
@@ -82,51 +321,37 @@ const DB = {
   }
 };
 
-function getCollection(userId) {
-  return DB.get(`collection_${userId}`, []);
-}
-function saveCollection(userId, parts) {
-  DB.set(`collection_${userId}`, parts);
-}
-function getSavedCards() {
-  return DB.get('savedCards', []);
-}
-function saveSavedCards(list) {
-  DB.set('savedCards', list);
-}
-function getTournaments() {
-  return DB.get('tournaments', []);
-}
-function saveTournaments(list) {
-  DB.set('tournaments', list);
-}
-function getAllMembers() {
-  return USERS;
-}
+function getCollection(userId) { return DB.get(`collection_${userId}`, []); }
+function saveCollection(userId, parts) { DB.set(`collection_${userId}`, parts); }
+function getSavedCards() { return DB.get('savedCards', []); }
+function saveSavedCards(list) { DB.set('savedCards', list); }
+function getTournaments() { return DB.get('tournaments', []); }
+function saveTournaments(list) { DB.set('tournaments', list); }
+function getAllMembers() { return USERS; }
 
 // Migrates old tournament-card records (v1 format with playerName) to savedCards
 function migrateLegacyData() {
   const old = DB.get('tournaments', []);
   if (old.length === 0 || !old[0].playerName) return;
-  const existing = getSavedCards();
+  const existing   = getSavedCards();
   const existingIds = new Set(existing.map(c => c.id));
-  const migrated = old
+  const migrated   = old
     .filter(t => !existingIds.has(t.id))
     .map(t => ({
-      id: t.id || ('card_' + Date.now() + Math.random()),
-      playerName: t.playerName || '',
-      team: t.team || '',
-      showTeam: !!t.team,
-      rank: t.rank || 1,
-      specialRank: null,
-      deck: (t.deck || []).map(d => typeof d === 'string' ? { name: d } : d),
+      id:             t.id || ('card_' + Date.now() + Math.random()),
+      playerName:     t.playerName || '',
+      team:           t.team || '',
+      showTeam:       !!t.team,
+      rank:           t.rank || 1,
+      specialRank:    null,
+      deck:           (t.deck || []).map(d => typeof d === 'string' ? { name: d } : d),
       tournamentName: t.tournamentName || '',
-      bottomText: t.bottomText || 'COBALT DRAGONA',
-      photo: t.photo || null,
-      logoLeft: t.logoLeft || null,
-      logoRight: t.logoRight || null,
-      date: t.date || '',
-      createdBy: null
+      bottomText:     t.bottomText || 'COBALT DRAGONA',
+      photo:          t.photo || null,
+      logoLeft:       t.logoLeft || null,
+      logoRight:      t.logoRight || null,
+      date:           t.date || '',
+      createdBy:      null
     }));
   if (migrated.length > 0) {
     saveSavedCards([...existing, ...migrated]);
@@ -135,14 +360,22 @@ function migrateLegacyData() {
 }
 
 function getTypeIcon(type) {
-  if (type === 'blade')   return '⚔️';
-  if (type === 'ratchet') return '⚙️';
-  if (type === 'bit')     return '🔩';
+  if (type === 'blade')      return '⚔️';
+  if (type === 'ratchet')    return '⚙️';
+  if (type === 'bit')        return '🔩';
+  if (type === 'cx-chip')    return '💎';
+  if (type === 'cx-main')    return '🗡️';
+  if (type === 'cx-assist')  return '🛡️';
+  if (type === 'integrated') return '🔗';
   return '◆';
 }
 function getTypeBadgeClass(type) {
-  if (type === 'blade')   return 'badge-blade';
-  if (type === 'ratchet') return 'badge-ratchet';
-  if (type === 'bit')     return 'badge-bit';
+  if (type === 'blade')      return 'badge-blade';
+  if (type === 'ratchet')    return 'badge-ratchet';
+  if (type === 'bit')        return 'badge-bit';
+  if (type === 'cx-chip')    return 'badge-cx-chip';
+  if (type === 'cx-main')    return 'badge-cx-main';
+  if (type === 'cx-assist')  return 'badge-cx-assist';
+  if (type === 'integrated') return 'badge-integrated';
   return '';
 }
