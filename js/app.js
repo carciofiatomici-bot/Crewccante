@@ -62,6 +62,16 @@ document.addEventListener('DOMContentLoaded', () => {
   setupPhotoUpload('part-photo-drop', 'part-photo', 'part-photo-preview', 'part-photo-placeholder');
   document.getElementById('search-list').addEventListener('input', renderKnownPartsList);
 
+  // Popola select varianti deck
+  const variantOptions = VARIANTS.map(v => `<option value="${v.id}">${v.label}</option>`).join('');
+  [1, 2, 3].forEach(i => {
+    const sel = document.getElementById(`deck-variant-${i}`);
+    if (sel) {
+      sel.innerHTML = variantOptions;
+      sel.addEventListener('change', updateCardPreview);
+    }
+  });
+
   // Subtab switching
   document.querySelectorAll('.subtab-btn').forEach(btn => {
     btn.addEventListener('click', () => switchSubtab(btn.dataset.subtab));
@@ -536,58 +546,56 @@ function updateCardPreview() {
     teamBadge.classList.add('hidden');
   }
 
-  // Deck: auto-load stock images from images/parts/
+  // Deck: auto-load stock images from images/parts/ (con variante colore)
   [1, 2, 3].forEach(i => {
-    const nameVal  = document.getElementById(`deck-${i}`).value.trim() || '—';
-    document.getElementById(`card-deck-name-${i}`).textContent = nameVal;
+    const nameVal   = document.getElementById(`deck-${i}`).value.trim() || '—';
+    const variantEl = document.getElementById(`deck-variant-${i}`);
+    const variant   = variantEl ? variantEl.value : '';
 
-    // Form preview thumbnail
+    // Nome da mostrare sulla card: "DRAN SWORD BLACK"
+    const variantLabel = variant
+      ? (VARIANTS.find(v => v.id === variant)?.label || variant)
+      : '';
+    const displayName = nameVal === '—'
+      ? '—'
+      : (variantLabel ? `${nameVal} ${variantLabel}` : nameVal);
+    document.getElementById(`card-deck-name-${i}`).textContent = displayName;
+
     const formPrev = document.getElementById(`deck-preview-${i}`);
     const formPh   = document.getElementById(`deck-ph-${i}`);
-
-    // Card img
-    const cardImg = document.getElementById(`card-deck-img-${i}`);
-    const cardPh  = cardImg ? cardImg.nextElementSibling : null;
+    const cardImg  = document.getElementById(`card-deck-img-${i}`);
+    const cardPh   = cardImg ? cardImg.nextElementSibling : null;
 
     if (nameVal && nameVal !== '—') {
-      const part   = KNOWN_PARTS.find(p => p.name.toLowerCase() === nameVal.toLowerCase());
-      const imgPath = part
-        ? `images/parts/${part.id}.png`
-        : `images/parts/${nameVal.toLowerCase().replace(/\s+/g, '-')}.png`;
+      const part      = KNOWN_PARTS.find(p => p.name.toLowerCase() === nameVal.toLowerCase());
+      const baseId    = part ? part.id : nameVal.toLowerCase().replace(/\s+/g, '-');
+      const imgPath   = variant
+        ? `images/parts/${baseId}-${variant}.png`
+        : `images/parts/${baseId}.png`;
 
-      // Update form thumbnail
-      if (formPrev) {
-        formPrev.src = imgPath;
-        formPrev.style.display = '';
-        formPrev.onerror = () => {
-          formPrev.style.display = 'none';
-          if (formPh) formPh.style.display = '';
+      const setImg = (el, isCard) => {
+        el.src = imgPath;
+        if (isCard) el.classList.remove('hidden');
+        else el.style.display = '';
+        el.onerror = () => {
+          if (isCard) el.classList.add('hidden');
+          else el.style.display = 'none';
+          const ph = isCard ? cardPh : formPh;
+          if (ph) ph.style.display = '';
         };
-        formPrev.onload = () => {
-          if (formPh) formPh.style.display = 'none';
+        el.onload = () => {
+          const ph = isCard ? cardPh : formPh;
+          if (ph) ph.style.display = 'none';
         };
-        if (formPrev.complete && formPrev.naturalWidth > 0 && formPrev.src.includes(imgPath)) {
-          if (formPh) formPh.style.display = 'none';
-        }
-      }
+      };
 
-      // Update card img
-      if (cardImg) {
-        cardImg.src = imgPath;
-        cardImg.classList.remove('hidden');
-        cardImg.onerror = () => {
-          cardImg.classList.add('hidden');
-          if (cardPh) cardPh.style.display = '';
-        };
-        cardImg.onload = () => {
-          if (cardPh) cardPh.style.display = 'none';
-        };
-      }
+      if (formPrev) setImg(formPrev, false);
+      if (cardImg)  setImg(cardImg, true);
     } else {
       if (formPrev) { formPrev.src = ''; formPrev.style.display = 'none'; }
-      if (formPh) formPh.style.display = '';
-      if (cardImg) { cardImg.src = ''; cardImg.classList.add('hidden'); }
-      if (cardPh) cardPh.style.display = '';
+      if (formPh)   formPh.style.display = '';
+      if (cardImg)  { cardImg.src = ''; cardImg.classList.add('hidden'); }
+      if (cardPh)   cardPh.style.display = '';
     }
   });
 
@@ -633,9 +641,14 @@ function saveCard() {
   const showTeam = document.getElementById('toggle-team').checked;
   const team     = document.getElementById('t-team-name').value.trim();
 
-  const deck = [1, 2, 3].map(i => ({
-    name: document.getElementById(`deck-${i}`).value.trim() || ''
-  }));
+  const deck = [1, 2, 3].map(i => {
+    const variantEl = document.getElementById(`deck-variant-${i}`);
+    const variant   = variantEl ? variantEl.value : '';
+    return {
+      name:    document.getElementById(`deck-${i}`).value.trim() || '',
+      variant
+    };
+  });
 
   const photoPreview = document.getElementById('photo-preview');
   const photo        = photoPreview.classList.contains('hidden') ? null : photoPreview.src;

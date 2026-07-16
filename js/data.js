@@ -44,6 +44,20 @@ const KNOWN_PARTS = [
   { id: 't012', name: 'Kick',            type: 'bit',     series: 'Beyblade X' },
 ];
 
+// ── VARIANTI COLORE ──────────────────────────
+const VARIANTS = [
+  { id: '',        label: 'Standard'  },
+  { id: 'black',   label: 'Black'     },
+  { id: 'white',   label: 'White'     },
+  { id: 'red',     label: 'Red'       },
+  { id: 'blue',    label: 'Blue'      },
+  { id: 'gold',    label: 'Gold'      },
+  { id: 'silver',  label: 'Silver'    },
+  { id: 'galaxy',  label: 'Galaxy'    },
+  { id: 'chrome',  label: 'Chrome'    },
+  { id: 'limited', label: 'Limited'   },
+];
+
 // ── AUTH ─────────────────────────────────────────────────
 const USERS = [
   { id: 'u1',  username: 'Croccante', password: 'croccante', displayName: 'Croccante', role: 'admin' },

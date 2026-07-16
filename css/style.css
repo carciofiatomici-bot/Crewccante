@@ -1397,6 +1397,23 @@ input, select, textarea { font-family: inherit; }
   gap: 0.35rem;
 }
 
+.deck-variant {
+  width: 100%;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text-secondary);
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 0.3rem 0.5rem;
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.deck-variant:focus { border-color: var(--accent-blue); color: var(--text-primary); }
+.deck-variant option { background: var(--bg-card); }
+
 .deck-slot-stock-img {
   width: 100%;
   aspect-ratio: 1;
