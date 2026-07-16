@@ -46,7 +46,15 @@ const KNOWN_PARTS = [
 
 // ── AUTH ─────────────────────────────────────────────────
 const USERS = [
-  { id: 'u1', username: 'Croccante', password: 'croccante', displayName: 'Croccante', role: 'admin' }
+  { id: 'u1',  username: 'Croccante', password: 'croccante', displayName: 'Croccante', role: 'admin' },
+  { id: 'u2',  username: 'unam',      password: 'unam',      displayName: 'Unam',      role: 'member' },
+  { id: 'u3',  username: 'bukko',     password: 'bukko',     displayName: 'Bukko',     role: 'member' },
+  { id: 'u4',  username: 'asbein',    password: 'asbein',    displayName: 'Asbein',    role: 'member' },
+  { id: 'u5',  username: 'ermina',    password: 'ermina',    displayName: 'Ermina',    role: 'member' },
+  { id: 'u6',  username: 'daniel',    password: 'daniel',    displayName: 'Daniel',    role: 'member' },
+  { id: 'u7',  username: 'dalitrus',  password: 'dalitrus',  displayName: 'Dalitrus',  role: 'member' },
+  { id: 'u8',  username: 'nardazza',  password: 'nardazza',  displayName: 'Nardazza',  role: 'member' },
+  { id: 'u9',  username: 'beymax',    password: 'beymax',    displayName: 'Beymax',    role: 'member' },
 ];
 
 // ── STORAGE HELPERS ──────────────────────────────────────
