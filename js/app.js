@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.modal-tab').forEach(tab => {
     tab.addEventListener('click', () => switchModalTab(tab.dataset.tab));
   });
-  setupPhotoUpload('photo-drop', 'player-photo', 'photo-preview', 'photo-placeholder', 'bg-removal-area');
+  setupPhotoUpload('photo-drop', 'player-photo', 'photo-preview', 'photo-placeholder', 'bg-removal-area', true);
   setupPhotoUpload('part-photo-drop', 'part-photo', 'part-photo-preview', 'part-photo-placeholder');
   document.getElementById('search-list').addEventListener('input', renderKnownPartsList);
 
@@ -346,7 +346,7 @@ function savePart() {
 }
 
 // ── PHOTO UPLOAD ─────────────────────────────
-function setupPhotoUpload(dropId, inputId, previewId, placeholderId, revealId = null) {
+function setupPhotoUpload(dropId, inputId, previewId, placeholderId, revealId = null, autoBgRemoval = false) {
   const drop = document.getElementById(dropId);
   const input = document.getElementById(inputId);
   const preview = document.getElementById(previewId);
@@ -360,23 +360,26 @@ function setupPhotoUpload(dropId, inputId, previewId, placeholderId, revealId = 
     e.preventDefault();
     drop.style.borderColor = '';
     const file = e.dataTransfer.files[0];
-    if (file && file.type.startsWith('image/')) loadPhotoFile(file, preview, placeholder, revealEl);
+    if (file && file.type.startsWith('image/')) loadPhotoFile(file, preview, placeholder, revealEl, autoBgRemoval);
   });
   input.addEventListener('change', () => {
-    if (input.files[0]) loadPhotoFile(input.files[0], preview, placeholder, revealEl);
+    if (input.files[0]) loadPhotoFile(input.files[0], preview, placeholder, revealEl, autoBgRemoval);
   });
 }
 
-function loadPhotoFile(file, preview, placeholder, revealEl = null) {
+function loadPhotoFile(file, preview, placeholder, revealEl = null, autoBgRemoval = false) {
   const reader = new FileReader();
   reader.onload = e => {
     preview.src = e.target.result;
     preview.classList.remove('hidden');
     placeholder.classList.add('hidden');
     if (revealEl) revealEl.classList.remove('hidden');
-    // reset bg-status if present
     const statusEl = document.getElementById('bg-status');
     if (statusEl) { statusEl.textContent = ''; statusEl.className = 'bg-status hidden'; }
+    if (autoBgRemoval) {
+      updateCardPreview();
+      handleBgRemoval();
+    }
   };
   reader.readAsDataURL(file);
 }
@@ -493,32 +496,31 @@ async function handleBgRemoval() {
   const preview = document.getElementById('photo-preview');
   const btn = document.getElementById('btn-remove-bg');
   const statusEl = document.getElementById('bg-status');
+  const cardLoading = document.getElementById('card-loading');
 
-  if (preview.classList.contains('hidden') || !preview.src) {
-    alert('Carica prima una foto del giocatore');
-    return;
-  }
+  if (preview.classList.contains('hidden') || !preview.src) return;
 
+  // Attendi che il modulo ES sia pronto (max 20s)
   if (!window._removeBg) {
     statusEl.innerHTML = '<span class="spinner"></span> Caricamento modello AI…';
     statusEl.className = 'bg-status loading';
     statusEl.classList.remove('hidden');
-    // Aspetta fino a 15 secondi che il modulo ES venga caricato
-    await new Promise((resolve, reject) => {
+    await new Promise(resolve => {
       if (window._removeBg) { resolve(); return; }
       const handler = () => { document.removeEventListener('removeBgReady', handler); resolve(); };
       document.addEventListener('removeBgReady', handler);
-      setTimeout(() => { document.removeEventListener('removeBgReady', handler); reject(new Error('timeout')); }, 15000);
-    }).catch(() => {});
+      setTimeout(resolve, 20000);
+    });
     if (!window._removeBg) {
-      statusEl.textContent = '✗ Modulo non disponibile. Verifica la connessione Internet.';
+      statusEl.textContent = '✗ Modulo non disponibile — verifica la connessione.';
       statusEl.className = 'bg-status error';
       return;
     }
   }
 
   btn.disabled = true;
-  statusEl.innerHTML = '<span class="spinner"></span> Elaborazione… (prima volta ~30-60s, scarica modello AI)';
+  cardLoading.classList.remove('hidden');
+  statusEl.innerHTML = '<span class="spinner"></span> Rimozione sfondo in corso…';
   statusEl.className = 'bg-status loading';
   statusEl.classList.remove('hidden');
 
@@ -533,7 +535,7 @@ async function handleBgRemoval() {
     preview.src = url;
     statusEl.textContent = '✓ Sfondo rimosso!';
     statusEl.className = 'bg-status success';
-    setTimeout(() => { statusEl.className = 'bg-status hidden'; }, 4000);
+    setTimeout(() => { statusEl.className = 'bg-status hidden'; }, 3000);
     updateCardPreview();
   } catch (err) {
     console.error('BG removal error:', err);
@@ -541,6 +543,7 @@ async function handleBgRemoval() {
     statusEl.className = 'bg-status error';
   } finally {
     btn.disabled = false;
+    cardLoading.classList.add('hidden');
   }
 }
 
