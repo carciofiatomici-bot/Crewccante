@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Crewccante — Beyblade Team</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div id="app">
+
+    <!-- LOGIN PAGE -->
+    <div id="page-login" class="page active">
+      <div class="login-bg">
+        <div class="spin-ring ring-1"></div>
+        <div class="spin-ring ring-2"></div>
+        <div class="spin-ring ring-3"></div>
+      </div>
+      <div class="login-card">
+        <div class="logo-area">
+          <div class="logo-circle">
+            <span class="logo-letter">C</span>
+          </div>
+          <h1 class="team-name">CREWCCANTE</h1>
+          <p class="team-sub">Beyblade Team Manager</p>
+        </div>
+        <form id="login-form" class="login-form">
+          <div class="field">
+            <label>Username</label>
+            <input type="text" id="login-user" placeholder="username" autocomplete="off" />
+          </div>
+          <div class="field">
+            <label>Password</label>
+            <input type="password" id="login-pass" placeholder="••••••••" />
+          </div>
+          <div id="login-error" class="error-msg hidden">Credenziali non valide</div>
+          <button type="submit" class="btn-primary">ENTRA</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- MAIN APP (after login) -->
+    <div id="page-app" class="page hidden">
+
+      <!-- SIDEBAR -->
+      <nav id="sidebar">
+        <div class="sidebar-logo">
+          <div class="logo-circle small">
+            <span class="logo-letter">C</span>
+          </div>
+          <span class="sidebar-title">CREWCCANTE</span>
+        </div>
+        <ul class="nav-links">
+          <li><a href="#" class="nav-link active" data-page="dashboard">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+            Dashboard
+          </a></li>
+          <li><a href="#" class="nav-link" data-page="collection">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><line x1="12" y1="2" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="22"/><line x1="2" y1="12" x2="6" y2="12"/><line x1="18" y1="12" x2="22" y2="12"/></svg>
+            La Mia Collezione
+          </a></li>
+          <li><a href="#" class="nav-link" data-page="database">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+            Database Team
+          </a></li>
+          <li><a href="#" class="nav-link" data-page="tournament">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 21h8M12 17v4M12 3C9 3 7 5 7 8c0 2.5 1.5 4.5 3 5.5V17h4v-3.5C15.5 12.5 17 10.5 17 8c0-3-2-5-5-5z"/></svg>
+            Carte Torneo
+          </a></li>
+        </ul>
+        <div class="sidebar-user">
+          <div class="user-avatar">
+            <span id="nav-user-initial">C</span>
+          </div>
+          <span id="nav-user-name">Croccante</span>
+          <button id="logout-btn" title="Esci">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          </button>
+        </div>
+      </nav>
+
+      <!-- MAIN CONTENT -->
+      <main id="main-content">
+
+        <!-- DASHBOARD -->
+        <div id="view-dashboard" class="view active">
+          <div class="page-header">
+            <h2>Dashboard</h2>
+            <p class="page-sub">Benvenuto nel team manager di Crewccante</p>
+          </div>
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-icon blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/></svg></div>
+              <div>
+                <div class="stat-value" id="stat-total-parts">0</div>
+                <div class="stat-label">Pezzi Totali</div>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+              <div>
+                <div class="stat-value" id="stat-members">1</div>
+                <div class="stat-label">Membri</div>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 21h8M12 17v4M12 3C9 3 7 5 7 8c0 2.5 1.5 4.5 3 5.5V17h4v-3.5C15.5 12.5 17 10.5 17 8c0-3-2-5-5-5z"/></svg></div>
+              <div>
+                <div class="stat-value" id="stat-tournaments">0</div>
+                <div class="stat-label">Tornei</div>
+              </div>
+            </div>
+          </div>
+          <div class="dashboard-grid">
+            <div class="card">
+              <h3>La Tua Collezione</h3>
+              <div id="dash-my-parts" class="parts-preview">
+                <p class="empty-msg">Nessun pezzo aggiunto ancora. <a href="#" data-page="collection" class="nav-trigger">Aggiungi pezzi →</a></p>
+              </div>
+            </div>
+            <div class="card">
+              <h3>Ultimi Tornei</h3>
+              <div id="dash-tournaments" class="empty-msg">
+                <p>Nessun torneo registrato. <a href="#" data-page="tournament" class="nav-trigger">Crea carta torneo →</a></p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- COLLEZIONE -->
+        <div id="view-collection" class="view hidden">
+          <div class="page-header">
+            <h2>La Mia Collezione</h2>
+            <p class="page-sub">Gestisci i tuoi pezzi Beyblade X</p>
+          </div>
+          <div class="toolbar">
+            <button class="btn-primary" id="btn-add-part">+ Aggiungi Pezzo</button>
+            <div class="search-box">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input type="text" id="search-parts" placeholder="Cerca pezzo..." />
+            </div>
+            <div class="filter-tabs">
+              <button class="filter-btn active" data-filter="all">Tutti</button>
+              <button class="filter-btn" data-filter="blade">Blade</button>
+              <button class="filter-btn" data-filter="ratchet">Ratchet</button>
+              <button class="filter-btn" data-filter="bit">Bit</button>
+            </div>
+          </div>
+          <div id="parts-grid" class="parts-grid">
+            <div class="empty-state">
+              <div class="empty-icon">⚙</div>
+              <p>Nessun pezzo nella collezione</p>
+              <button class="btn-primary" id="btn-add-part-2">Aggiungi il primo pezzo</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- DATABASE TEAM -->
+        <div id="view-database" class="view hidden">
+          <div class="page-header">
+            <h2>Database Team</h2>
+            <p class="page-sub">Visualizza i pezzi di tutti i membri del team</p>
+          </div>
+          <div class="member-tabs" id="member-tabs"></div>
+          <div id="db-content" class="parts-grid"></div>
+        </div>
+
+        <!-- CARTE TORNEO -->
+        <div id="view-tournament" class="view hidden">
+          <div class="page-header">
+            <h2>Carte Torneo</h2>
+            <p class="page-sub">Crea la carta per un giocatore del torneo</p>
+          </div>
+          <div class="tournament-layout">
+            <div class="card tournament-form">
+              <h3>Crea Carta</h3>
+              <div class="field">
+                <label>Foto Giocatore</label>
+                <div class="photo-upload" id="photo-drop">
+                  <input type="file" id="player-photo" accept="image/*" hidden />
+                  <div class="photo-placeholder" id="photo-placeholder">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    <span>Clicca o trascina foto</span>
+                  </div>
+                  <img id="photo-preview" class="hidden" alt="preview" />
+                </div>
+                <div id="bg-removal-area" class="bg-removal-area hidden">
+                  <button class="btn-remove-bg" id="btn-remove-bg">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/><path d="M4.93 4.93l14.14 14.14"/></svg>
+                    Rimuovi Sfondo
+                  </button>
+                  <span id="bg-status" class="bg-status hidden"></span>
+                </div>
+              </div>
+              <div class="field">
+                <label>Nome Giocatore</label>
+                <input type="text" id="t-player-name" placeholder="Es. Croccante" />
+              </div>
+              <div class="field">
+                <label>Posizione in Classifica</label>
+                <input type="number" id="t-rank" min="1" max="99" placeholder="1" />
+              </div>
+              <div class="field">
+                <label>Deck (3 Beyblade)</label>
+                <div class="deck-inputs">
+                  <input type="text" class="deck-input" id="deck-1" placeholder="Beyblade 1" />
+                  <input type="text" class="deck-input" id="deck-2" placeholder="Beyblade 2" />
+                  <input type="text" class="deck-input" id="deck-3" placeholder="Beyblade 3" />
+                </div>
+              </div>
+              <div class="field">
+                <label>Torneo</label>
+                <input type="text" id="t-tournament-name" placeholder="Es. Regionale Milano 2025" />
+              </div>
+              <button class="btn-primary" id="btn-generate-card">Genera Carta</button>
+              <button class="btn-secondary" id="btn-save-tournament">Salva Torneo</button>
+            </div>
+            <div class="card tournament-preview">
+              <h3>Anteprima</h3>
+              <div id="card-preview" class="card-preview-area">
+                <div class="card-template" id="card-template">
+                  <div class="card-bg-glow"></div>
+                  <div class="card-rank" id="card-rank-display">#1</div>
+                  <div class="card-photo-area">
+                    <img id="card-photo" src="" alt="" />
+                    <div class="card-photo-placeholder">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    </div>
+                  </div>
+                  <div class="card-info">
+                    <div class="card-team">CREWCCANTE</div>
+                    <div class="card-name" id="card-name-display">NOME GIOCATORE</div>
+                    <div class="card-deck-label">DECK</div>
+                    <div class="card-deck" id="card-deck-display">
+                      <span class="bey-tag">—</span>
+                      <span class="bey-tag">—</span>
+                      <span class="bey-tag">—</span>
+                    </div>
+                    <div class="card-tournament-name" id="card-tournament-display">TORNEO</div>
+                  </div>
+                </div>
+              </div>
+              <button class="btn-secondary" id="btn-download-card">Scarica Carta (PNG)</button>
+            </div>
+          </div>
+          <!-- Lista tornei salvati -->
+          <div class="card" style="margin-top:1.5rem">
+            <h3>Tornei Salvati</h3>
+            <div id="tournaments-list" class="empty-msg">Nessun torneo salvato.</div>
+          </div>
+        </div>
+
+      </main>
+    </div>
+
+  </div>
+
+  <!-- MODAL AGGIUNGI PEZZO -->
+  <div id="modal-add-part" class="modal hidden">
+    <div class="modal-overlay" id="modal-overlay"></div>
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3>Aggiungi Pezzo</h3>
+        <button class="modal-close" id="modal-close">✕</button>
+      </div>
+      <div class="modal-tabs">
+        <button class="modal-tab active" data-tab="manual">Manuale</button>
+        <button class="modal-tab" data-tab="list">Dalla Lista</button>
+        <button class="modal-tab" data-tab="photo">Foto</button>
+      </div>
+      <!-- Manuale -->
+      <div class="modal-tab-content active" id="tab-manual">
+        <div class="field">
+          <label>Nome Pezzo</label>
+          <input type="text" id="part-name" placeholder="Es. Dran Sword" />
+        </div>
+        <div class="field">
+          <label>Tipo</label>
+          <select id="part-type">
+            <option value="blade">Blade</option>
+            <option value="ratchet">Ratchet</option>
+            <option value="bit">Bit</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Serie</label>
+          <input type="text" id="part-series" placeholder="Es. Beyblade X" />
+        </div>
+        <div class="field">
+          <label>Note (opzionale)</label>
+          <input type="text" id="part-notes" placeholder="Es. versione cromata" />
+        </div>
+      </div>
+      <!-- Dalla Lista -->
+      <div class="modal-tab-content hidden" id="tab-list">
+        <div class="search-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" id="search-list" placeholder="Cerca nella lista..." />
+        </div>
+        <div id="known-parts-list" class="known-parts-list"></div>
+      </div>
+      <!-- Foto -->
+      <div class="modal-tab-content hidden" id="tab-photo">
+        <div class="photo-upload" id="part-photo-drop">
+          <input type="file" id="part-photo" accept="image/*" hidden />
+          <div class="photo-placeholder" id="part-photo-placeholder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            <span>Carica foto del pezzo</span>
+          </div>
+          <img id="part-photo-preview" class="hidden" alt="preview" />
+        </div>
+        <p class="note-text">Seleziona il tipo dopo il caricamento</p>
+        <div class="field">
+          <label>Nome Pezzo</label>
+          <input type="text" id="part-photo-name" placeholder="Es. Dran Sword" />
+        </div>
+        <div class="field">
+          <label>Tipo</label>
+          <select id="part-photo-type">
+            <option value="blade">Blade</option>
+            <option value="ratchet">Ratchet</option>
+            <option value="bit">Bit</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-secondary" id="btn-cancel-modal">Annulla</button>
+        <button class="btn-primary" id="btn-save-part">Aggiungi alla Collezione</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <!-- Background removal (WASM, client-side) — scarica il modello ~40MB alla prima esecuzione -->
+  <script type="module">
+    import { removeBackground } from 'https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.4.5/dist/browser/index.js';
+    window._removeBg = removeBackground;
+    document.dispatchEvent(new Event('removeBgReady'));
+  </script>
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
