@@ -64,6 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('btn-generate-card').addEventListener('click', updateCardPreview);
   document.getElementById('btn-save-tournament').addEventListener('click', saveTournament);
   document.getElementById('btn-download-card').addEventListener('click', downloadCard);
+  document.getElementById('btn-instagram').addEventListener('click', downloadForInstagram);
   document.getElementById('btn-remove-bg').addEventListener('click', handleBgRemoval);
   ['t-player-name', 't-rank', 't-team-name', 'deck-1', 'deck-2', 'deck-3',
    't-tournament-name', 't-bottom-text'].forEach(id => {
@@ -623,6 +624,93 @@ async function handleBgRemoval() {
   } finally {
     btn.disabled = false;
     cardLoading.classList.add('hidden');
+  }
+}
+
+async function downloadForInstagram() {
+  if (typeof html2canvas === 'undefined') {
+    alert('html2canvas non caricato. Verifica la connessione Internet e ricarica la pagina.');
+    return;
+  }
+  const card = document.getElementById('card-template');
+  const btn  = document.getElementById('btn-instagram');
+  const origText = btn.innerHTML;
+  btn.innerHTML = '<span class="spinner" style="width:14px;height:14px;border-width:2px"></span> Elaborazione…';
+  btn.disabled = true;
+
+  try {
+    // Render la carta ad alta risoluzione
+    const cardCanvas = await html2canvas(card, {
+      backgroundColor: '#0d1022',
+      scale: 4,
+      useCORS: true,
+      allowTaint: true,
+      logging: false
+    });
+
+    // Canvas Instagram portrait 4:5 (1080×1350)
+    const IG_W = 1080;
+    const IG_H = 1350;
+    const ig = document.createElement('canvas');
+    ig.width  = IG_W;
+    ig.height = IG_H;
+    const ctx = ig.getContext('2d');
+
+    // ── Sfondo ──────────────────────────────
+    const bgGrad = ctx.createLinearGradient(0, 0, IG_W, IG_H);
+    bgGrad.addColorStop(0,   '#0a0b10');
+    bgGrad.addColorStop(0.5, '#0d0e1a');
+    bgGrad.addColorStop(1,   '#13102a');
+    ctx.fillStyle = bgGrad;
+    ctx.fillRect(0, 0, IG_W, IG_H);
+
+    // Glow centrale
+    const glow = ctx.createRadialGradient(IG_W / 2, IG_H / 2, 0, IG_W / 2, IG_H / 2, IG_W * 0.65);
+    glow.addColorStop(0,   'rgba(139,92,246,0.18)');
+    glow.addColorStop(0.5, 'rgba(59,130,246,0.06)');
+    glow.addColorStop(1,   'transparent');
+    ctx.fillStyle = glow;
+    ctx.fillRect(0, 0, IG_W, IG_H);
+
+    // Anelli decorativi
+    [[300, 0.06], [480, 0.04], [640, 0.025]].forEach(([r, alpha]) => {
+      ctx.beginPath();
+      ctx.arc(IG_W / 2, IG_H / 2, r, 0, Math.PI * 2);
+      ctx.strokeStyle = `rgba(139,92,246,${alpha})`;
+      ctx.lineWidth = 1;
+      ctx.stroke();
+    });
+
+    // ── Carta centrata ───────────────────────
+    // Scala la carta per riempire ~85% dell'altezza con margini
+    const padding = 90;                                   // px liberi sopra/sotto
+    const maxH    = IG_H - padding * 2;
+    const maxW    = IG_W - padding * 2;
+    const ratio   = Math.min(maxW / cardCanvas.width, maxH / cardCanvas.height);
+    const drawW   = Math.round(cardCanvas.width  * ratio);
+    const drawH   = Math.round(cardCanvas.height * ratio);
+    const x       = Math.round((IG_W - drawW) / 2);
+    const y       = Math.round((IG_H - drawH) / 2);
+
+    // Ombra leggera sotto la carta
+    ctx.shadowColor   = 'rgba(139,92,246,0.35)';
+    ctx.shadowBlur    = 60;
+    ctx.shadowOffsetY = 12;
+    ctx.drawImage(cardCanvas, x, y, drawW, drawH);
+    ctx.shadowColor = 'transparent';
+
+    // ── Download ────────────────────────────
+    const name = document.getElementById('t-player-name').value.trim() || 'giocatore';
+    const a = document.createElement('a');
+    a.href     = ig.toDataURL('image/png');
+    a.download = `ig-${name.toLowerCase().replace(/\s+/g, '-')}.png`;
+    a.click();
+  } catch (err) {
+    console.error('IG export error:', err);
+    alert('Errore esportazione: ' + err.message);
+  } finally {
+    btn.innerHTML = origText;
+    btn.disabled  = false;
   }
 }
 
