@@ -756,8 +756,8 @@ input, select, textarea { font-family: inherit; }
    TOURNAMENT CARD TEMPLATE
    ============================================ */
 .card-template {
-  width: 260px;
-  height: 420px;
+  width: 280px;
+  height: 500px;
   background: linear-gradient(160deg, #0d1022 0%, #13102a 100%);
   border-radius: 16px;
   border: 1px solid rgba(139,92,246,0.3);
@@ -772,22 +772,49 @@ input, select, textarea { font-family: inherit; }
   position: absolute;
   top: -60px; left: 50%;
   transform: translateX(-50%);
-  width: 300px; height: 300px;
-  background: radial-gradient(circle, rgba(139,92,246,0.25) 0%, transparent 70%);
+  width: 320px; height: 320px;
+  background: radial-gradient(circle, rgba(139,92,246,0.2) 0%, transparent 70%);
   pointer-events: none;
 }
 
+/* ── Header ── */
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.55rem 0.75rem;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 5;
+}
+
 .card-rank {
-  position: absolute;
-  top: 0.75rem; right: 0.75rem;
   font-family: 'Orbitron', sans-serif;
   font-size: 1.1rem;
   font-weight: 900;
   color: var(--accent-gold);
   text-shadow: 0 0 15px rgba(245,158,11,0.5);
-  z-index: 5;
+  line-height: 1;
 }
 
+.card-team-badge {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.5rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--accent-purple);
+  background: rgba(139,92,246,0.12);
+  border: 1px solid rgba(139,92,246,0.25);
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  text-transform: uppercase;
+  max-width: 140px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ── Photo ── */
 .card-photo-area {
   width: 100%;
   flex: 1;
@@ -818,15 +845,16 @@ input, select, textarea { font-family: inherit; }
   content: '';
   position: absolute;
   bottom: 0; left: 0; right: 0;
-  height: 80px;
+  height: 70px;
   background: linear-gradient(to top, #0d1022, transparent);
   pointer-events: none;
 }
 
+/* ── Loading overlay ── */
 .card-loading-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(10,11,16,0.75);
+  background: rgba(10,11,16,0.78);
   backdrop-filter: blur(6px);
   display: flex;
   flex-direction: column;
@@ -846,74 +874,233 @@ input, select, textarea { font-family: inherit; }
   padding: 0 1rem;
 }
 
+/* ── Info (nome + torneo + deck) ── */
 .card-info {
-  padding: 0.6rem 1rem 1rem;
+  padding: 0.5rem 0.85rem 0.5rem;
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
+  gap: 0.25rem;
   position: relative;
   z-index: 2;
   flex-shrink: 0;
-  background: linear-gradient(to top, #0d1022 70%, transparent);
-}
-
-.card-team {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 0.6rem;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  color: var(--accent-purple);
-  text-align: center;
-  margin-top: 0.25rem;
+  background: linear-gradient(to top, #0d1022 75%, transparent);
 }
 
 .card-name {
   font-family: 'Orbitron', sans-serif;
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 900;
   text-align: center;
   letter-spacing: 0.05em;
   color: white;
   text-shadow: 0 0 20px rgba(255,255,255,0.3);
-}
-
-.card-deck-label {
-  font-size: 0.6rem;
-  font-weight: 700;
-  letter-spacing: 0.15em;
-  color: var(--text-secondary);
-  text-align: center;
-  text-transform: uppercase;
-  margin-top: 0.5rem;
-}
-
-.card-deck {
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-  align-items: center;
-}
-.bey-tag {
-  font-size: 0.75rem;
-  font-weight: 600;
-  padding: 0.2rem 0.7rem;
-  border-radius: 4px;
-  background: rgba(139,92,246,0.15);
-  border: 1px solid rgba(139,92,246,0.25);
-  color: #c4b5fd;
-  letter-spacing: 0.03em;
-  min-width: 140px;
-  text-align: center;
+  line-height: 1.2;
 }
 
 .card-tournament-name {
-  font-size: 0.65rem;
+  font-size: 0.58rem;
   color: var(--text-secondary);
   text-align: center;
   letter-spacing: 0.08em;
-  margin-top: 0.5rem;
   font-style: italic;
 }
+
+.card-deck-label {
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--text-muted);
+  text-align: center;
+  text-transform: uppercase;
+  margin-top: 0.2rem;
+}
+
+/* ── Deck grid (immagini) ── */
+.card-deck-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.3rem;
+  margin-top: 0.2rem;
+}
+
+.card-deck-slot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.card-deck-slot-img {
+  width: 64px;
+  height: 64px;
+  border-radius: 8px;
+  background: rgba(139,92,246,0.08);
+  border: 1px solid rgba(139,92,246,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+.card-deck-slot-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.card-deck-slot-ph { font-size: 1.4rem; opacity: 0.25; }
+
+.card-deck-slot-name {
+  font-size: 0.58rem;
+  font-weight: 600;
+  color: #c4b5fd;
+  text-align: center;
+  max-width: 64px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ── Bottom strip ── */
+.card-bottom-strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.4rem 0.75rem;
+  background: rgba(0,0,0,0.45);
+  border-top: 1px solid rgba(139,92,246,0.15);
+  flex-shrink: 0;
+  gap: 0.4rem;
+}
+
+.card-bottom-logo {
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.card-bottom-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 4px;
+}
+.card-logo-placeholder {
+  width: 30px;
+  height: 30px;
+  border-radius: 4px;
+  border: 1px dashed rgba(255,255,255,0.12);
+}
+
+.card-bottom-center-text {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.52rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.45);
+  text-align: center;
+  flex: 1;
+}
+
+/* ── Form: deck slots ── */
+.deck-slots-form {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+}
+
+.deck-slot-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.deck-slot-photo-upload {
+  width: 100%;
+  aspect-ratio: 1;
+  border: 1.5px dashed var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+  transition: border-color 0.2s;
+  background: rgba(255,255,255,0.02);
+}
+.deck-slot-photo-upload:hover { border-color: var(--accent-blue); }
+.deck-slot-photo-upload img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.deck-photo-icon {
+  font-size: 1.4rem;
+  color: var(--text-muted);
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Form: bottom bar ── */
+.bottom-bar-form {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.logo-mini-upload {
+  width: 48px;
+  height: 48px;
+  border: 1.5px dashed var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+  transition: border-color 0.2s;
+  position: relative;
+  background: rgba(255,255,255,0.02);
+}
+.logo-mini-upload:hover { border-color: var(--accent-purple); }
+.logo-mini-upload img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.logo-mini-ph {
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+  position: relative;
+  z-index: 1;
+}
+
+.bottom-text-input {
+  flex: 1;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.5rem 0.6rem;
+  color: var(--text-primary);
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-align: center;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.bottom-text-input:focus { border-color: var(--accent-purple); }
 
 /* Tornei salvati */
 #tournaments-list { display: flex; flex-direction: column; gap: 0.75rem; }

@@ -65,8 +65,17 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('btn-save-tournament').addEventListener('click', saveTournament);
   document.getElementById('btn-download-card').addEventListener('click', downloadCard);
   document.getElementById('btn-remove-bg').addEventListener('click', handleBgRemoval);
-  ['t-player-name', 't-rank', 'deck-1', 'deck-2', 'deck-3', 't-tournament-name'].forEach(id => {
+  ['t-player-name', 't-rank', 't-team-name', 'deck-1', 'deck-2', 'deck-3',
+   't-tournament-name', 't-bottom-text'].forEach(id => {
     document.getElementById(id).addEventListener('input', updateCardPreview);
+  });
+  // Deck photo uploads
+  [1, 2, 3].forEach(i => {
+    setupSimplePhotoUpload(`deck-drop-${i}`, `deck-file-${i}`, `deck-preview-${i}`, updateCardPreview);
+  });
+  // Logo uploads
+  ['left', 'right'].forEach(side => {
+    setupSimplePhotoUpload(`logo-drop-${side}`, `logo-file-${side}`, `logo-preview-${side}`, updateCardPreview);
   });
 });
 
@@ -384,81 +393,151 @@ function loadPhotoFile(file, preview, placeholder, revealEl = null, autoBgRemova
   reader.readAsDataURL(file);
 }
 
+function setupSimplePhotoUpload(dropId, inputId, previewId, onChange) {
+  const drop = document.getElementById(dropId);
+  const input = document.getElementById(inputId);
+  const preview = document.getElementById(previewId);
+  if (!drop || !input || !preview) return;
+  drop.addEventListener('click', () => input.click());
+  drop.addEventListener('dragover', e => { e.preventDefault(); drop.style.borderColor = 'var(--accent-blue)'; });
+  drop.addEventListener('dragleave', () => { drop.style.borderColor = ''; });
+  drop.addEventListener('drop', e => {
+    e.preventDefault(); drop.style.borderColor = '';
+    const file = e.dataTransfer.files[0];
+    if (file && file.type.startsWith('image/')) loadSimplePhoto(file, drop, preview, onChange);
+  });
+  input.addEventListener('change', () => {
+    if (input.files[0]) loadSimplePhoto(input.files[0], drop, preview, onChange);
+  });
+}
+
+function loadSimplePhoto(file, drop, preview, onChange) {
+  const reader = new FileReader();
+  reader.onload = e => {
+    preview.src = e.target.result;
+    preview.classList.remove('hidden');
+    drop.querySelectorAll('.deck-photo-icon, .logo-mini-ph').forEach(el => el.style.display = 'none');
+    if (onChange) onChange();
+  };
+  reader.readAsDataURL(file);
+}
+
 // ── TOURNAMENT ───────────────────────────────
 function updateCardPreview() {
-  const name = document.getElementById('t-player-name').value.trim() || 'NOME GIOCATORE';
-  const rank = document.getElementById('t-rank').value || '1';
-  const d1   = document.getElementById('deck-1').value.trim() || '—';
-  const d2   = document.getElementById('deck-2').value.trim() || '—';
-  const d3   = document.getElementById('deck-3').value.trim() || '—';
-  const tname = document.getElementById('t-tournament-name').value.trim() || 'TORNEO';
-  const photoPreview = document.getElementById('photo-preview');
+  const name       = document.getElementById('t-player-name').value.trim() || 'NOME GIOCATORE';
+  const rank       = document.getElementById('t-rank').value || '1';
+  const team       = document.getElementById('t-team-name').value.trim() || 'TEAM';
+  const tname      = document.getElementById('t-tournament-name').value.trim() || 'TORNEO';
+  const bottomText = document.getElementById('t-bottom-text').value.trim() || 'COBALT DRAGONA';
 
   document.getElementById('card-name-display').textContent = name.toUpperCase();
   document.getElementById('card-rank-display').textContent = `#${rank}`;
+  document.getElementById('card-team-display').textContent = team.toUpperCase();
   document.getElementById('card-tournament-display').textContent = tname.toUpperCase();
-  const deckEl = document.getElementById('card-deck-display');
-  const tags = deckEl.querySelectorAll('.bey-tag');
-  tags[0].textContent = d1;
-  tags[1].textContent = d2;
-  tags[2].textContent = d3;
+  document.getElementById('card-bottom-text').textContent = bottomText.toUpperCase();
 
+  // Deck: nomi e immagini
+  [1, 2, 3].forEach(i => {
+    const nameVal = document.getElementById(`deck-${i}`).value.trim() || '—';
+    document.getElementById(`card-deck-name-${i}`).textContent = nameVal;
+
+    const formPreview = document.getElementById(`deck-preview-${i}`);
+    const cardImg = document.getElementById(`card-deck-img-${i}`);
+    const ph = cardImg.nextElementSibling;
+    if (formPreview && !formPreview.classList.contains('hidden') && formPreview.src) {
+      cardImg.src = formPreview.src;
+      cardImg.classList.remove('hidden');
+      if (ph) ph.style.display = 'none';
+    } else {
+      cardImg.classList.add('hidden');
+      if (ph) ph.style.display = '';
+    }
+  });
+
+  // Foto giocatore
+  const photoPreview = document.getElementById('photo-preview');
   const cardPhoto = document.getElementById('card-photo');
+  const cardPhotoPh = document.getElementById('card-photo-placeholder');
   if (!photoPreview.classList.contains('hidden') && photoPreview.src) {
     cardPhoto.src = photoPreview.src;
     cardPhoto.classList.remove('hidden');
-    cardPhoto.nextElementSibling.style.display = 'none';
+    if (cardPhotoPh) cardPhotoPh.style.display = 'none';
   } else {
     cardPhoto.classList.add('hidden');
-    cardPhoto.nextElementSibling.style.display = '';
+    if (cardPhotoPh) cardPhotoPh.style.display = '';
   }
+
+  // Loghi barra inferiore
+  ['left', 'right'].forEach(side => {
+    const fp = document.getElementById(`logo-preview-${side}`);
+    const ci = document.getElementById(`card-logo-${side}`);
+    const cp = document.getElementById(`card-logo-${side}-ph`);
+    if (fp && !fp.classList.contains('hidden') && fp.src) {
+      ci.src = fp.src;
+      ci.classList.remove('hidden');
+      if (cp) cp.style.display = 'none';
+    } else {
+      ci.classList.add('hidden');
+      if (cp) cp.style.display = '';
+    }
+  });
 }
 
 function saveTournament() {
   const playerName = document.getElementById('t-player-name').value.trim();
   if (!playerName) { alert('Inserisci il nome del giocatore'); return; }
+
   const rank = parseInt(document.getElementById('t-rank').value) || 1;
-  const deck = [
-    document.getElementById('deck-1').value.trim(),
-    document.getElementById('deck-2').value.trim(),
-    document.getElementById('deck-3').value.trim(),
-  ].filter(Boolean);
+  const team = document.getElementById('t-team-name').value.trim();
   const tournamentName = document.getElementById('t-tournament-name').value.trim();
+  const bottomText = document.getElementById('t-bottom-text').value.trim();
+
+  const deck = [1, 2, 3].map(i => {
+    const fp = document.getElementById(`deck-preview-${i}`);
+    return {
+      name: document.getElementById(`deck-${i}`).value.trim() || '',
+      photo: (fp && !fp.classList.contains('hidden') && fp.src) ? fp.src : null
+    };
+  });
+
   const photoPreview = document.getElementById('photo-preview');
   const photo = photoPreview.classList.contains('hidden') ? null : photoPreview.src;
+
+  const logoLeft  = (() => { const e = document.getElementById('logo-preview-left');  return (e && !e.classList.contains('hidden') && e.src) ? e.src : null; })();
+  const logoRight = (() => { const e = document.getElementById('logo-preview-right'); return (e && !e.classList.contains('hidden') && e.src) ? e.src : null; })();
 
   const list = getTournaments();
   list.push({
     id: 't_' + Date.now(),
-    playerName,
-    rank,
-    deck,
-    tournamentName,
-    photo,
+    playerName, team, rank, deck, tournamentName, bottomText,
+    photo, logoLeft, logoRight,
     date: new Date().toLocaleDateString('it-IT')
   });
   saveTournaments(list);
   renderTournaments();
   renderDashboard();
-  alert(`Torneo salvato per ${playerName}!`);
+  alert(`Carta salvata per ${playerName}!`);
 }
 
 function renderTournaments() {
   const list = getTournaments();
   const el = document.getElementById('tournaments-list');
   if (list.length === 0) {
-    el.innerHTML = '<p class="empty-msg">Nessun torneo salvato.</p>';
+    el.innerHTML = '<p class="empty-msg">Nessun carta salvata.</p>';
     return;
   }
-  el.innerHTML = list.slice().reverse().map(t => `
-    <div class="tournament-item">
+  el.innerHTML = list.slice().reverse().map(t => {
+    const deckNames = (t.deck || []).map(d => (typeof d === 'string' ? d : d.name)).filter(Boolean).join(' · ');
+    const teamLabel = t.team ? `<span style="color:var(--accent-purple);margin-left:0.4rem;font-size:0.78rem">${escHtml(t.team)}</span>` : '';
+    return `<div class="tournament-item">
       <div class="t-info">
-        <div class="t-name">${escHtml(t.playerName)}</div>
+        <div class="t-name">${escHtml(t.playerName)}${teamLabel}</div>
         <div class="t-meta">${escHtml(t.tournamentName || '—')} &bull; ${t.date}</div>
-        <div class="t-meta" style="margin-top:2px">${t.deck.map(d => escHtml(d)).join(' · ')}</div>
+        ${deckNames ? `<div class="t-meta" style="margin-top:2px">${escHtml(deckNames)}</div>` : ''}
       </div>
       <div class="t-rank-badge">#${t.rank}</div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
 }
 
 async function downloadCard() {

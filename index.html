@@ -195,6 +195,10 @@
                 </div>
               </div>
               <div class="field">
+                <label>Team</label>
+                <input type="text" id="t-team-name" placeholder="Es. Crewccante" />
+              </div>
+              <div class="field">
                 <label>Nome Giocatore</label>
                 <input type="text" id="t-player-name" placeholder="Es. Croccante" />
               </div>
@@ -203,16 +207,53 @@
                 <input type="number" id="t-rank" min="1" max="99" placeholder="1" />
               </div>
               <div class="field">
-                <label>Deck (3 Beyblade)</label>
-                <div class="deck-inputs">
-                  <input type="text" class="deck-input" id="deck-1" placeholder="Beyblade 1" />
-                  <input type="text" class="deck-input" id="deck-2" placeholder="Beyblade 2" />
-                  <input type="text" class="deck-input" id="deck-3" placeholder="Beyblade 3" />
+                <label>Deck (3 Beyblade — foto + nome)</label>
+                <div class="deck-slots-form">
+                  <div class="deck-slot-form">
+                    <div class="deck-slot-photo-upload" id="deck-drop-1">
+                      <input type="file" id="deck-file-1" accept="image/*" hidden />
+                      <img id="deck-preview-1" class="hidden" alt="" />
+                      <span class="deck-photo-icon">+</span>
+                    </div>
+                    <input type="text" class="deck-input" id="deck-1" placeholder="Bey 1" />
+                  </div>
+                  <div class="deck-slot-form">
+                    <div class="deck-slot-photo-upload" id="deck-drop-2">
+                      <input type="file" id="deck-file-2" accept="image/*" hidden />
+                      <img id="deck-preview-2" class="hidden" alt="" />
+                      <span class="deck-photo-icon">+</span>
+                    </div>
+                    <input type="text" class="deck-input" id="deck-2" placeholder="Bey 2" />
+                  </div>
+                  <div class="deck-slot-form">
+                    <div class="deck-slot-photo-upload" id="deck-drop-3">
+                      <input type="file" id="deck-file-3" accept="image/*" hidden />
+                      <img id="deck-preview-3" class="hidden" alt="" />
+                      <span class="deck-photo-icon">+</span>
+                    </div>
+                    <input type="text" class="deck-input" id="deck-3" placeholder="Bey 3" />
+                  </div>
                 </div>
               </div>
               <div class="field">
                 <label>Torneo</label>
                 <input type="text" id="t-tournament-name" placeholder="Es. Regionale Milano 2025" />
+              </div>
+              <div class="field">
+                <label>Barra inferiore</label>
+                <div class="bottom-bar-form">
+                  <div class="logo-mini-upload" id="logo-drop-left" title="Logo sinistra">
+                    <input type="file" id="logo-file-left" accept="image/*" hidden />
+                    <img id="logo-preview-left" class="hidden" alt="" />
+                    <span class="logo-mini-ph">SX</span>
+                  </div>
+                  <input type="text" id="t-bottom-text" placeholder="COBALT DRAGONA" value="COBALT DRAGONA" class="bottom-text-input" />
+                  <div class="logo-mini-upload" id="logo-drop-right" title="Logo destra">
+                    <input type="file" id="logo-file-right" accept="image/*" hidden />
+                    <img id="logo-preview-right" class="hidden" alt="" />
+                    <span class="logo-mini-ph">DX</span>
+                  </div>
+                </div>
               </div>
               <button class="btn-primary" id="btn-generate-card">Genera Carta</button>
               <button class="btn-secondary" id="btn-save-tournament">Salva Torneo</button>
@@ -226,23 +267,58 @@
                     <span>Rimozione sfondo…<br>Prima esecuzione ~30-60s</span>
                   </div>
                   <div class="card-bg-glow"></div>
-                  <div class="card-rank" id="card-rank-display">#1</div>
+                  <!-- Header: rank + team -->
+                  <div class="card-header">
+                    <div class="card-rank" id="card-rank-display">#1</div>
+                    <div class="card-team-badge" id="card-team-display">TEAM</div>
+                  </div>
+                  <!-- Foto giocatore -->
                   <div class="card-photo-area">
                     <img id="card-photo" src="" alt="" />
                     <div class="card-photo-placeholder">
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
                     </div>
                   </div>
+                  <!-- Nome + Torneo + Deck -->
                   <div class="card-info">
-                    <div class="card-team">CREWCCANTE</div>
                     <div class="card-name" id="card-name-display">NOME GIOCATORE</div>
-                    <div class="card-deck-label">DECK</div>
-                    <div class="card-deck" id="card-deck-display">
-                      <span class="bey-tag">—</span>
-                      <span class="bey-tag">—</span>
-                      <span class="bey-tag">—</span>
-                    </div>
                     <div class="card-tournament-name" id="card-tournament-display">TORNEO</div>
+                    <div class="card-deck-label">DECK</div>
+                    <div class="card-deck-grid">
+                      <div class="card-deck-slot">
+                        <div class="card-deck-slot-img">
+                          <img id="card-deck-img-1" class="hidden" alt="" />
+                          <span class="card-deck-slot-ph">⚔</span>
+                        </div>
+                        <span class="card-deck-slot-name" id="card-deck-name-1">—</span>
+                      </div>
+                      <div class="card-deck-slot">
+                        <div class="card-deck-slot-img">
+                          <img id="card-deck-img-2" class="hidden" alt="" />
+                          <span class="card-deck-slot-ph">⚔</span>
+                        </div>
+                        <span class="card-deck-slot-name" id="card-deck-name-2">—</span>
+                      </div>
+                      <div class="card-deck-slot">
+                        <div class="card-deck-slot-img">
+                          <img id="card-deck-img-3" class="hidden" alt="" />
+                          <span class="card-deck-slot-ph">⚔</span>
+                        </div>
+                        <span class="card-deck-slot-name" id="card-deck-name-3">—</span>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Barra inferiore: logo SX | testo | logo DX -->
+                  <div class="card-bottom-strip">
+                    <div class="card-bottom-logo">
+                      <img id="card-logo-left" class="hidden" alt="" />
+                      <div class="card-logo-placeholder" id="card-logo-left-ph"></div>
+                    </div>
+                    <div class="card-bottom-center-text" id="card-bottom-text">COBALT DRAGONA</div>
+                    <div class="card-bottom-logo">
+                      <img id="card-logo-right" class="hidden" alt="" />
+                      <div class="card-logo-placeholder" id="card-logo-right-ph"></div>
+                    </div>
                   </div>
                 </div>
               </div>
