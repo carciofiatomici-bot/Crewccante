@@ -70,6 +70,15 @@ document.addEventListener('DOMContentLoaded', () => {
    't-tournament-name', 't-bottom-text'].forEach(id => {
     document.getElementById(id).addEventListener('input', updateCardPreview);
   });
+
+  // Toggle Team Sì/No
+  document.getElementById('toggle-team').addEventListener('change', function () {
+    const label = document.getElementById('toggle-team-label');
+    const field = document.getElementById('team-name-field');
+    label.textContent = this.checked ? 'Sì' : 'No';
+    field.style.display = this.checked ? '' : 'none';
+    updateCardPreview();
+  });
   // Deck photo uploads
   [1, 2, 3].forEach(i => {
     setupSimplePhotoUpload(`deck-drop-${i}`, `deck-file-${i}`, `deck-preview-${i}`, updateCardPreview);
@@ -427,15 +436,24 @@ function loadSimplePhoto(file, drop, preview, onChange) {
 function updateCardPreview() {
   const name       = document.getElementById('t-player-name').value.trim() || 'NOME GIOCATORE';
   const rank       = document.getElementById('t-rank').value || '1';
-  const team       = document.getElementById('t-team-name').value.trim() || 'TEAM';
   const tname      = document.getElementById('t-tournament-name').value.trim() || 'TORNEO';
   const bottomText = document.getElementById('t-bottom-text').value.trim() || 'COBALT DRAGONA';
+  const showTeam   = document.getElementById('toggle-team').checked;
+  const team       = document.getElementById('t-team-name').value.trim() || 'TEAM';
 
   document.getElementById('card-name-display').textContent = name.toUpperCase();
   document.getElementById('card-rank-display').textContent = `#${rank}`;
-  document.getElementById('card-team-display').textContent = team.toUpperCase();
   document.getElementById('card-tournament-display').textContent = tname.toUpperCase();
   document.getElementById('card-bottom-text').textContent = bottomText.toUpperCase();
+
+  // Team badge: visibile solo se toggle è Sì
+  const teamBadge = document.getElementById('card-team-display');
+  if (showTeam) {
+    teamBadge.textContent = team.toUpperCase();
+    teamBadge.classList.remove('hidden');
+  } else {
+    teamBadge.classList.add('hidden');
+  }
 
   // Deck: nomi e immagini
   [1, 2, 3].forEach(i => {
