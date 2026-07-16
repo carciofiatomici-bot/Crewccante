@@ -419,10 +419,20 @@
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-  <!-- Background removal (WASM, client-side) — scarica il modello ~40MB alla prima esecuzione -->
+  <!-- Background removal — esm.sh risolve automaticamente il pacchetto in ESM -->
   <script type="module">
-    import { removeBackground } from 'https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.4.5/dist/browser/index.js';
-    window._removeBg = removeBackground;
+    try {
+      const { removeBackground } = await import('https://esm.sh/@imgly/background-removal');
+      window._removeBg = removeBackground;
+    } catch(e) {
+      console.warn('esm.sh fallito, provo unpkg:', e);
+      try {
+        const { removeBackground } = await import('https://unpkg.com/@imgly/background-removal/dist/browser/index.js');
+        window._removeBg = removeBackground;
+      } catch(e2) {
+        console.error('Background removal non disponibile:', e2);
+      }
+    }
     document.dispatchEvent(new Event('removeBgReady'));
   </script>
   <script src="js/data.js"></script>

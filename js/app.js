@@ -607,7 +607,6 @@ async function handleBgRemoval() {
   try {
     const blob = dataURLtoBlob(preview.src);
     const resultBlob = await window._removeBg(blob, {
-      publicPath: 'https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.4.5/dist/browser/',
       model: 'small',
       output: { format: 'image/png', quality: 0.9 }
     });
